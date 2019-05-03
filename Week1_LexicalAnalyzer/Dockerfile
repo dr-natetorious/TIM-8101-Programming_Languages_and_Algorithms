@@ -9,7 +9,8 @@ RUN apt-get -y update && apt-get -y install \
   git \
   zip \
   awscli \
-  nano
+  nano \
+  make
 
 # Setup the class path so everything is found by default
 # To run the javacc utility use a command like
