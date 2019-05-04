@@ -11,3 +11,4 @@ function build_jj(){
 
 build_jj HelloWorld
 build_jj MoreStatements
+build_jj NCU_PL
