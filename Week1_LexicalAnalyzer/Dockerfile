@@ -16,3 +16,5 @@ RUN apt-get -y update && apt-get -y install \
 # To run the javacc utility use a command like
 #     java javacc -OUTPUT_DIRECTORY=/src/out /src/LDK/Lexer/NCU_PL.jj
 ENV CLASSPATH=.:/src/javacc-6.0/bin/lib/javacc.jar
+
+ENV OUTPUT_DIRECTORY=/src/out/
