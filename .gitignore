@@ -9,7 +9,6 @@
 **/~*.tmp
 **/~*.xlsx
 **/a.out
-**/.vscode
 **/obj/*
 **/.vs/*
 **/src/out/

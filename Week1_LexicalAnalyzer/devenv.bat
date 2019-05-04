@@ -7,7 +7,7 @@
 
 @CALL docker build -t %ImageName% .
 @IF NOT ERRORLEVEL 0 GOTO ERROR
-@CALL docker run -it -v %base_path%\src:/src -v %userprofile%\.aws:/root/.aws -w /src %ImageName% bash
+@CALL docker run -it -v %base_path%\src:/src -v %userprofile%\.aws:/root/.aws -w /src -p 5005:5005 %ImageName% bash
 @IF NOT ERRORLEVEL 0 GOTO ERROR
 GOTO END
 
