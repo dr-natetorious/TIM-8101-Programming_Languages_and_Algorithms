@@ -1,3 +1,0 @@
-BEGIN NCUPL
-    OUTPUT "Hello world!";
-END

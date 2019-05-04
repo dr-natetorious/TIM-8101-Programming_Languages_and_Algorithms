@@ -1,0 +1,3 @@
+BEGIN NCUPL
+  OUTPUT "foo bar" + cheese + "cheese" ;
+END  

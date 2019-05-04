@@ -1,0 +1,16 @@
+BEGIN NCUPL
+    int monthlyBudget;
+    int monthlySpending;
+
+    INPUT "What is your budget for this month in whole dollars? " monthlyBudget;
+    INPUT "How much did you spend this month? " monthlySpending;
+
+    IF monthlyBudget > monthlySpending 
+    THEN OUTPUT "You are under budget for this month.";
+
+    IF monthlySpending > monthlyBudget
+    THEN OUTPUT "You are over budget for this month.";
+
+    IF monthlySpending == monthlyBudget
+    THEN OUTPUT "You are right on target for this month.";
+END
