@@ -208,19 +208,19 @@ void Expression():
 {}
 {
   LOOKAHEAD(2)
-  "(" Expression() ")"
-  | <IDENTIFIER>
+//  "(" Expression() ")" |
+   <IDENTIFIER>
   | <INTEGER_LITERAL>
   | <BOOL_LITERAL>
   | <FLOATING_POINT_LITERAL>
   | <STRING_LITERAL>
-//  | BinaryExpression()
+  | BinaryExpression()
 }
 
 void BinaryExpression():
 {}
 {
-  Expression() <BINARY_OP> Expression()
+  <IDENTIFIER> <BINARY_OP> <IDENTIFIER>
 }
 
 void EmptyStatement():

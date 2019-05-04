@@ -1,0 +1,169 @@
+/**
+ * Northcentral University
+ * School of Business & Technology Management
+ * JavaCC file for NCU/PL
+ */
+ 
+options {
+  JAVA_UNICODE_ESCAPE = true;
+  STATIC = false;
+}
+
+PARSER_BEGIN(NCU_PL_Lexer)
+  public class NCU_PL_Lexer {}
+PARSER_END(NCU_PL_Lexer)
+
+
+void NCU_PL_Program() :
+{}
+{
+  <BEGIN> <NCUPL>
+  ( NCU_PL_Statement() )*
+  <END>
+  <EOF>
+}
+
+/***** Statements *****/
+
+void NCU_PL_Statement():
+{}
+{
+    STATEMENT()
+    <SEMICOLON>
+}
+
+void STATEMENT():
+{}
+{
+    LOOKAHEAD(2) OUTPUT_STATEMENT()     |
+    LOOKAHEAD(2) INPUT_STATEMENT()      |
+    LOOKAHEAD(2) VARIABLE_DECLARATION() | 
+    LOOKAHEAD(2) VARIABLE_ASSIGNMENT()  |
+    LOOKAHEAD(2) IF_THEN_STATEMENT()
+}
+
+void OUTPUT_STATEMENT():
+{}
+{
+    <OUTPUT> EXPRESSION() <SEMICOLON>
+}
+
+void INPUT_STATEMENT():
+{}
+{
+    <INPUT> EXPRESSION() [<IDENTIFIER>] <SEMICOLON>
+}
+
+void VARIABLE_DECLARATION():
+{}
+{
+    VARIABLE_TYPE() <IDENTIFIER> <SEMICOLON>
+}
+
+void VARIABLE_TYPE():
+{}
+{
+    <INT> | <BOOL> | <STRING>
+}
+
+void VARIABLE_ASSIGNMENT():
+{}
+{
+    <IDENTIFIER> <EQUALS> EXPRESSION() <SEMICOLON>
+}
+
+void IF_THEN_STATEMENT():
+{}
+{
+    <IF> EXPRESSION() <THEN> STATEMENT() <SEMICOLON>
+}
+
+
+/***** Expressions *****/
+void EXPRESSION():
+{}
+{
+    LOOKAHEAD(5) BINARY_EXPRESSION()        |
+    LOOKAHEAD(5) IDENTIFIER_EXPRESSION()    |
+    LOOKAHEAD(5) LITERAL_VALUE_EXPRESSION() |
+    LOOKAHEAD(5) PARENTHESIZED_EXPRESSION()
+}
+
+void IDENTIFIER_EXPRESSION():
+{}
+{
+    <IDENTIFIER> <EQUALS> EXPRESSION() <SEMICOLON>
+}
+
+void LITERAL_VALUE_EXPRESSION():
+{}
+{    
+    <STRING_LITERAL> | <INTEGER_LITERAL> | <BOOLEAN_LITERAL> | <IDENTIFIER>
+}
+
+void PARENTHESIZED_EXPRESSION():
+{}
+{
+    "(" EXPRESSION() ")"
+}
+
+
+void BINARY_EXPRESSION():
+{}
+{
+    LOOKAHEAD(5) EXPRESSION() BINARY_OPERATOR() EXPRESSION()
+}
+
+void BINARY_OPERATOR():
+{}
+{
+    PLUS | MINUS | MULTIPLY | DIVIDE | EQUALITY | GT | LT
+}
+
+
+/*** Reserved words         ***/
+TOKEN: { <NCUPL:   "NCUPL"   > }
+TOKEN: { <BEGIN:   "BEGIN"   > }
+TOKEN: { <END:     "END"     > }
+TOKEN: { <OUTPUT:  "OUTPUT"  > }
+TOKEN: { <INPUT:   "INPUT"   > }
+TOKEN: { <IF:      "IF"      > }
+TOKEN: { <THEN:    "THEN"    > }
+
+/*** Types                  ***/
+TOKEN: { <INT:    "int"      > }
+TOKEN: { <BOOL:   "bool"     > }
+TOKEN: { <STRING: "string"   > }
+
+/*** Symbols                ***/ 
+TOKEN: { <SEMICOLON:     ";" > }
+TOKEN: { <LEFT_PAREN:    "(" > }
+TOKEN: { <RIGHT_PAREN:   ")" > }
+TOKEN: { <PLUS:          "+" > }
+TOKEN: { <MINUS:         "-" > }
+TOKEN: { <MULTIPLY:      "*" > }
+TOKEN: { <DIVIDE:        "/" > }
+TOKEN: { <EQUALITY:     "==" > }
+TOKEN: { <EQUALS:        "=" > }
+TOKEN: { <GT:            ">" > }
+TOKEN: { <LT:            "<" > }
+
+/*** boolean literals are either "true" or "false" ***/
+TOKEN: { <BOOLEAN_LITERAL: "true" | "false" > }
+
+/*** integer literals are at least one number ***/
+TOKEN: { <INTEGER_LITERAL: (["0"-"9"])+ > }
+
+/*** integer literals are at least one number ***/
+TOKEN: { <STRING_LITERAL: "\"" (~["\"","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\""> }
+
+/*** identifiers begin with an underscore or a letter, followed by an optional number of letters, numbers, or underscores ***/
+TOKEN: { <IDENTIFIER: (["a"-"z"]|["A"-"Z"]|"_")+((["a"-"z","A"-"Z","0"-"9","_"])*)? > } 
+
+/*** Comments ***/
+MORE: { "#": IN_COMMENT }
+<IN_COMMENT> SKIP: { <COMMENT: "\n"|"\r"|"\r\n">: DEFAULT }
+<IN_COMMENT> MORE: { <~[]> }
+
+/*** Skip Whitespace ***/
+SKIP: { "\n"|"\r"|"\n\r"|" "|"\t" }
