@@ -18,14 +18,13 @@ function header(){
 
 function test_file(){
   filename=$1
-  header $filename
-  
-  echo
-  cat $filename
-  echo
+  java NCU_PL_Lexer_Driver $filename > `basename $filename.log`
 
-  java NCU_PL_Lexer_Driver $filename
-  return $?
+  if [ $? -eq 0 ]; then
+    echo "test: pass: $filename"
+  else
+    echo "test: fail: $filename"
+  fi
 }
 
 header "Build the .jj files"
@@ -40,9 +39,8 @@ header "Unit test scripts"
 pushd ${OUTPUT_DIRECTORY}/NCU_PL 
 
 test_file ../../LDK/tests-programs/output-repro.ncupl
-
-#test_file ../../LDK/tests-programs/hello-world.ncupl
-#test_file ../../LDK/tests-programs/budget-calculator.ncupl
-#test_file ../../LDK/tests-programs/age-calculator.ncupl
+test_file ../../LDK/tests-programs/hello-world.ncupl
+test_file ../../LDK/tests-programs/budget-calculator.ncupl
+test_file ../../LDK/tests-programs/age-calculator.ncupl
 
 popd
