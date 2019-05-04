@@ -120,19 +120,24 @@ TOKEN:{
 **********************/
 TOKEN :{
   <SEMICOLON : ";">
+  | <R_PARAN: ")" >
+  | <L_PARAN: "(" >
 }
 
 /**********************
   OPERATORS
 **********************/
 TOKEN: {
-  <BOP_PLUS: "+" >
-  | <BOP_MINUS: "-" >
-  | <BOP_MULTI: "*">
-  | <BOP_DIV: "/" >
-  | <BOP_EQ: "==" >
-  | <BOP_LT: "<" >
-  | <BOP_GT: ">" >
+  <BINARY_OP:
+    <PLUS> | <MINUS> | <MULTI> | <DIV> | <EQ> | <GT>|<LT>
+  >
+  | <#PLUS: "+" >
+  | <#MINUS: "-" >
+  | <#MULTI: "*">
+  | <#DIV: "/" >
+  | <#EQ: "==" >
+  | <#LT: "<" >
+  | <#GT: ">" >
 }
 
 /**********************
@@ -202,12 +207,20 @@ void VarDeclaration():
 void Expression():
 {}
 {
+  LOOKAHEAD(2)
   "(" Expression() ")"
   | <IDENTIFIER>
   | <INTEGER_LITERAL>
   | <BOOL_LITERAL>
   | <FLOATING_POINT_LITERAL>
   | <STRING_LITERAL>
+//  | BinaryExpression()
+}
+
+void BinaryExpression():
+{}
+{
+  Expression() <BINARY_OP> Expression()
 }
 
 void EmptyStatement():
