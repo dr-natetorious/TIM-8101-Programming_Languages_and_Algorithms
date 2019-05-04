@@ -1,0 +1,3 @@
+BEGIN NCUPL
+  OUTPUT "hi " + name + ", how are you?";
+END  

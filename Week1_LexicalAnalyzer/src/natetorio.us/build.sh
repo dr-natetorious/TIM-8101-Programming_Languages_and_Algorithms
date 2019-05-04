@@ -39,8 +39,10 @@ javac -d ${OUTPUT_DIRECTORY}/NCU_PL -cp ../out/NCU_PL/  NCU_PL_Lexer_Driver.java
 header "Unit test scripts"
 pushd ${OUTPUT_DIRECTORY}/NCU_PL 
 
-test_file ../../LDK/tests-programs/hello-world.ncupl
-test_file ../../LDK/tests-programs/budget-calculator.ncupl
-test_file ../../LDK/tests-programs/age-calculator.ncupl
+test_file ../../LDK/tests-programs/output-repro.ncupl
+
+#test_file ../../LDK/tests-programs/hello-world.ncupl
+#test_file ../../LDK/tests-programs/budget-calculator.ncupl
+#test_file ../../LDK/tests-programs/age-calculator.ncupl
 
 popd
