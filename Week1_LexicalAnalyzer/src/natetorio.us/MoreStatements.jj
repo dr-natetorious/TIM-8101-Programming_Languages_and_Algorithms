@@ -39,6 +39,14 @@ SKIP :
 }
 
 /**********************
+  DEFINE COMMENTS
+**********************/
+SKIP : 
+{
+  <SINGLE_LINE_COMMENT: "#" (~["\n","\r"])* ("\n"|"\r"|"\r\n")>
+}
+
+/**********************
   RESERVED WORDS
 **********************/
 TOKEN :
@@ -194,10 +202,12 @@ void VarDeclaration():
 void Expression():
 {}
 {
-  <IDENTIFIER>
+  "(" Expression() ")"
+  | <IDENTIFIER>
   | <INTEGER_LITERAL>
   | <BOOL_LITERAL>
   | <FLOATING_POINT_LITERAL>
+  | <STRING_LITERAL>
 }
 
 void EmptyStatement():
