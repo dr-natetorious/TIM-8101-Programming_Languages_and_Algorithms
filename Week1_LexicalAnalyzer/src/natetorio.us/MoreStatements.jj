@@ -1,0 +1,207 @@
+/**** 
+ * Copyright (c) 2019, Nate Bachmeier.
+ * All rights reserved.
+ */
+
+
+options {
+  LOOKAHEAD = 1;
+  CHOICE_AMBIGUITY_CHECK = 2;
+  OTHER_AMBIGUITY_CHECK = 1;
+  STATIC = true;
+  IGNORE_CASE = false;
+}
+
+PARSER_BEGIN(NCUPLParser)
+
+/** Simple brace matcher. */
+public class NCUPLParser {
+
+  /** Main entry point. */
+  public static void main(String args[]) throws ParseException {
+    NCUPLParser parser = new NCUPLParser(System.in);
+    parser.Input();
+  }
+
+}
+
+PARSER_END(NCUPLParser)
+
+/**********************
+  IGNORE WHITE SPACE
+**********************/
+SKIP :
+{
+  " "
+  | "\t"
+  | "\n"
+  | "\r"
+}
+
+/**********************
+  RESERVED WORDS
+**********************/
+TOKEN :
+{
+  <R_OUTPUT: "OUTPUT" >
+  | <R_INPUT: "INPUT">
+  | <R_IF: "IF">
+  | <R_THEN: "THEN">
+  | <R_START: "BEGIN NCUPL">
+  | <R_END: "END">
+}
+
+/**********************
+  LITERALS
+**********************/
+TOKEN :
+{
+  <INTEGER_LITERAL:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+      | <OCTAL_LITERAL> (["l","L"])?
+  >
+|  <#DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|  <#HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|  <#OCTAL_LITERAL: "0" (["0"-"7"])* >
+|  <FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])?
+      | "." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])?
+      | (["0"-"9"])+ <EXPONENT> (["f","F","d","D"])?
+      | (["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"]
+  >
+| <#EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+| <CHARACTER_LITERAL:
+      "'"
+      (   (~["'","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )
+      "'"
+  >
+| <STRING_LITERAL:
+      "\""
+      (   (~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )*
+      "\""
+  >
+| <BOOL_LITERAL: "true" | "false">
+}
+
+/**********************
+  IDENTIFIER
+**********************/
+TOKEN:{
+  <IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+| <#LETTER: ["A"-"Z","a"-"z","_"]>
+| <#DIGIT: ["0"-"9"]>
+}
+
+/**********************
+  SEPERATORS
+**********************/
+TOKEN :{
+  <SEMICOLON : ";">
+}
+
+/**********************
+  OPERATORS
+**********************/
+TOKEN: {
+  <BOP_PLUS: "+" >
+  | <BOP_MINUS: "-" >
+  | <BOP_MULTI: "*">
+  | <BOP_DIV: "/" >
+  | <BOP_EQ: "==" >
+  | <BOP_LT: "<" >
+  | <BOP_GT: ">" >
+}
+
+/**********************
+  Types
+**********************/
+TOKEN : {
+  <SIMPLE_TYPE:
+    "int" | "string" | "float" | "bool">
+}
+
+/**********************
+  STATEMENTS
+**********************/
+
+/** Root production. */
+void Input() :
+{}
+{
+  "BEGIN NCUPL"
+    (Statement())* 
+  "END"
+  <EOF>
+}
+
+void Statement() :
+{}
+{
+  LOOKAHEAD(2)
+  InputStatement()
+  | OutputStatement()
+  | VarDeclaration()
+  | SetVariable()
+  | IfStatement()
+  | EmptyStatement()
+}
+
+void InputStatement():
+{}
+{
+  "INPUT" Expression() [<IDENTIFIER>] ";"
+}
+
+void OutputStatement():
+{}
+{
+  "OUTPUT" Expression() ";"
+}
+
+void IfStatement():
+{}
+{
+  "IF" Expression() "THEN" Statement() ";"
+}
+
+void SetVariable():
+{}
+{
+  <IDENTIFIER> "=" Expression() ";"
+}
+
+void VarDeclaration():
+{}
+{
+  <SIMPLE_TYPE> <IDENTIFIER> ";"
+}
+
+void Expression():
+{}
+{
+  <IDENTIFIER>
+  | <INTEGER_LITERAL>
+  | <BOOL_LITERAL>
+  | <FLOATING_POINT_LITERAL>
+}
+
+void EmptyStatement():
+{}
+{
+  ";"
+}
