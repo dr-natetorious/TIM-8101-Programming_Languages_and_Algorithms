@@ -17,6 +17,7 @@ function build_jjt(){
   java javacc -OUTPUT_DIRECTORY=${jjt_out} "${jjt_out}/NCU_PL.jj"
 
   cp NCU_PL_Lexer_Driver.java ${jjt_out}
+  cp MyVisitor.java ${jjt_out}
   javac ${jjt_out}/*.java
   jar cvf ${OUTPUT_DIRECTORY}/${name}.tree.jar ${jjt_out}/*.class
 }
@@ -39,27 +40,33 @@ function test_file(){
   fi
 }
 
-header "Build the .jj files"
-#build_jj HelloWorld
-#build_jj MoreStatements
-build_jj NCU_PL
+function do_jj_section(){
+  header "Build the .jj files"
+  build_jj HelloWorld
+  build_jj MoreStatements
+  build_jj NCU_PL
 
-header "Bulid the Lexer Driver"
-javac -d ${OUTPUT_DIRECTORY}/NCU_PL -cp ../out/NCU_PL/  NCU_PL_Lexer_Driver.java
+  header "Bulid the Lexer Driver"
+  javac -d ${OUTPUT_DIRECTORY}/NCU_PL -cp ../out/NCU_PL/  NCU_PL_Lexer_Driver.java
 
-header "Unit test scripts"
-pushd ${OUTPUT_DIRECTORY}/NCU_PL 
-test_file ../../LDK/tests-programs/output-repro.ncupl
-test_file ../../LDK/tests-programs/hello-world.ncupl
-test_file ../../LDK/tests-programs/budget-calculator.ncupl
-test_file ../../LDK/tests-programs/age-calculator.ncupl
-popd
+  header "Unit test scripts"
+  pushd ${OUTPUT_DIRECTORY}/NCU_PL 
+  test_file ../../LDK/tests-programs/output-repro.ncupl
+  test_file ../../LDK/tests-programs/hello-world.ncupl
+  test_file ../../LDK/tests-programs/budget-calculator.ncupl
+  test_file ../../LDK/tests-programs/age-calculator.ncupl
+  popd
+}
 
-header "Build the .jjt files"
-build_jjt NCU_PL
-pushd ${OUTPUT_DIRECTORY}/tree/NCU_PL 
-test_file ../../../LDK/tests-programs/hello-world.ncupl
-test_file ../../../LDK/tests-programs/output-repro.ncupl
-test_file ../../../LDK/tests-programs/budget-calculator.ncupl
-test_file ../../../LDK/tests-programs/age-calculator.ncupl
-popd
+function do_jjt_section(){
+  header "Build the .jjt files"
+  build_jjt NCU_PL
+  pushd ${OUTPUT_DIRECTORY}/tree/NCU_PL 
+  test_file ../../../LDK/tests-programs/hello-world.ncupl
+  test_file ../../../LDK/tests-programs/output-repro.ncupl
+  test_file ../../../LDK/tests-programs/budget-calculator.ncupl
+  test_file ../../../LDK/tests-programs/age-calculator.ncupl
+  popd
+}
+
+do_jjt_section 

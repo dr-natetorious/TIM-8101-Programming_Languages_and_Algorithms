@@ -14,7 +14,15 @@ public class NCU_PL_Lexer_Driver
         {
             System.out.println("Beginning lexical analysis of file \"" + args[0] + "\"");
             NCU_PL_Lexer lexer = new NCU_PL_Lexer(new java.io.FileInputStream(args[0]));
-            lexer.NCU_PL_Program();
+            SimpleNode root = lexer.NCU_PL_Program();
+            MyVisitor visitor = new MyVisitor();
+            root.jjtAccept(visitor, "tacos-are-good");
+
+            for(int i=0; i<root.children.length; i++)
+            {
+                visitor.visit((SimpleNode)root.jjtGetChild(i), "burrito");
+            }
+
             lexer.ReInit(new java.io.FileInputStream(args[0]));
             boolean EOF = false;
             while(!EOF)
