@@ -25,6 +25,7 @@ function test_file(){
   echo
 
   java NCU_PL_Lexer_Driver $filename
+  return $?
 }
 
 header "Build the .jj files"
@@ -37,6 +38,9 @@ javac -d ${OUTPUT_DIRECTORY}/NCU_PL -cp ../out/NCU_PL/  NCU_PL_Lexer_Driver.java
 
 header "Unit test scripts"
 pushd ${OUTPUT_DIRECTORY}/NCU_PL 
-pwd
+
 test_file ../../LDK/tests-programs/hello-world.ncupl
+test_file ../../LDK/tests-programs/budget-calculator.ncupl
+test_file ../../LDK/tests-programs/age-calculator.ncupl
+
 popd
