@@ -9,6 +9,18 @@ function build_jj(){
   jar cvf ${OUTPUT_DIRECTORY}/${name}.jar ${OUTPUT_DIRECTORY}/${name}/*.class
 }
 
+function build_jjt(){
+  name=$1
+  jjt_out=${OUTPUT_DIRECTORY}/tree/${name}
+  java jjtree -OUTPUT_DIRECTORY=${jjt_out} "${name}.jjt"
+
+  java javacc -OUTPUT_DIRECTORY=${jjt_out} "${jjt_out}/NCU_PL.jj"
+
+  cp NCU_PL_Lexer_Driver.java ${jjt_out}
+  javac ${jjt_out}/*.java
+  jar cvf ${OUTPUT_DIRECTORY}/${name}.tree.jar ${jjt_out}/*.class
+}
+
 function header(){
   echo "====================="
   echo "$*"
@@ -37,10 +49,17 @@ javac -d ${OUTPUT_DIRECTORY}/NCU_PL -cp ../out/NCU_PL/  NCU_PL_Lexer_Driver.java
 
 header "Unit test scripts"
 pushd ${OUTPUT_DIRECTORY}/NCU_PL 
-
 test_file ../../LDK/tests-programs/output-repro.ncupl
 test_file ../../LDK/tests-programs/hello-world.ncupl
 test_file ../../LDK/tests-programs/budget-calculator.ncupl
 test_file ../../LDK/tests-programs/age-calculator.ncupl
+popd
 
+header "Build the .jjt files"
+build_jjt NCU_PL
+pushd ${OUTPUT_DIRECTORY}/tree/NCU_PL 
+test_file ../../../LDK/tests-programs/hello-world.ncupl
+test_file ../../../LDK/tests-programs/output-repro.ncupl
+test_file ../../../LDK/tests-programs/budget-calculator.ncupl
+test_file ../../../LDK/tests-programs/age-calculator.ncupl
 popd
