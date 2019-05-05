@@ -17,7 +17,7 @@ PARSER_BEGIN(NCU_PL_Lexer)
 PARSER_END(NCU_PL_Lexer)
 
 
-SimpleNode NCU_PL_Program() #ProgramNode:
+SimpleNode NCU_PL_Program() #SimpleNode:
 {}
 {
   <BEGIN> <NCUPL>
@@ -32,51 +32,54 @@ SimpleNode NCU_PL_Program() #ProgramNode:
 
 /***** Statements *****/
 
-void NCU_PL_Statement():
+void NCU_PL_Statement() #void:
 {}
 {
     STATEMENT()
     <SEMICOLON>
 }
 
-void STATEMENT():
+void STATEMENT() #void:
 {}
 {
-    LOOKAHEAD(2) (OUTPUT_STATEMENT() #OutputStatement)     |
-    LOOKAHEAD(2) (INPUT_STATEMENT() #InputStatement)      |
-    LOOKAHEAD(2) (VARIABLE_DECLARATION() #VarDeclareStatement) | 
-    LOOKAHEAD(2) (VARIABLE_ASSIGNMENT() #VarAssignmentStatement)  |
-    LOOKAHEAD(2) (IF_THEN_STATEMENT() #IfStatement)
+    LOOKAHEAD(2) OUTPUT_STATEMENT()     |
+    LOOKAHEAD(2) INPUT_STATEMENT()      |
+    LOOKAHEAD(2) VARIABLE_DECLARATION() | 
+    LOOKAHEAD(2) VARIABLE_ASSIGNMENT()  |
+    LOOKAHEAD(2) IF_THEN_STATEMENT()
 }
 
-void OUTPUT_STATEMENT():
+void OUTPUT_STATEMENT() #OutputStatement:
 {}
 {
     <OUTPUT> EXPRESSION()
 }
 
-void INPUT_STATEMENT():
+void INPUT_STATEMENT() #InputStatement:
 {}
 {
     <INPUT> EXPRESSION() [<IDENTIFIER>]
 }
 
-void VARIABLE_DECLARATION():
+void VARIABLE_DECLARATION() #VarDeclarationStatement:
 {}
 {
     VARIABLE_TYPE() NAME()
 }
 
-void VARIABLE_TYPE():
+void VARIABLE_TYPE() #TypeName:
 {}
 {
     <INT> #Int | <BOOL> #Bool | <STRING> #String
 }
 
 void NAME() #Name:
-{}
+{ Token t;}
 {
-    <IDENTIFIER>
+    t = <IDENTIFIER>
+    {
+        jjtThis.value = t.image;
+    }
 }
 
 void VARIABLE_ASSIGNMENT():
@@ -96,10 +99,10 @@ void IF_THEN_STATEMENT():
 void EXPRESSION():
 {}
 {
-    LOOKAHEAD(5) BINARY_EXPRESSION() #BinaryExpression        |
-    LOOKAHEAD(5) IDENTIFIER_EXPRESSION() #IdentifierExpression   |
-    LOOKAHEAD(5) LITERAL_VALUE_EXPRESSION() #LiteralValueExpression |
-    LOOKAHEAD(5) PARENTHESIZED_EXPRESSION() #ParenthsizedExpression
+    LOOKAHEAD(5) BINARY_EXPRESSION() |
+    LOOKAHEAD(5) IDENTIFIER_EXPRESSION() |
+    LOOKAHEAD(5) LITERAL_VALUE_EXPRESSION()  |
+    LOOKAHEAD(5) PARENTHESIZED_EXPRESSION() 
 }
 
 void IDENTIFIER_EXPRESSION():
@@ -108,20 +111,20 @@ void IDENTIFIER_EXPRESSION():
     NAME() <EQUALS> EXPRESSION()
 }
 
-void LITERAL_VALUE_EXPRESSION():
-{}
+void LITERAL_VALUE_EXPRESSION() #Literal:
+{Token t;}
 {    
-    <STRING_LITERAL> | 
-    <INTEGER_LITERAL> | 
-    <BOOLEAN_LITERAL> | 
-    <IDENTIFIER> |
-    <LEFT_PAREN> LITERAL_VALUE_EXPRESSION() <RIGHT_PAREN>
+    (t = <STRING_LITERAL> {jjtThis.value = t.image;} #StrLiteral) | 
+    (t = <INTEGER_LITERAL> {jjtThis.value = t.image;} #IntLiteral) | 
+    (t = <BOOLEAN_LITERAL> {jjtThis.value = t.image;} #BoolLiteral) | 
+    ( NAME() #Id) |
+    <LEFT_PAREN> #LPAREN LITERAL_VALUE_EXPRESSION() <RIGHT_PAREN> #RPARAN
 }
 
 void PARENTHESIZED_EXPRESSION():
 {}
 {
-    <LEFT_PAREN> EXPRESSION() <RIGHT_PAREN>
+    <LEFT_PAREN> #LPAREN EXPRESSION() <RIGHT_PAREN> #RPARAN
 }
 
 
@@ -131,10 +134,16 @@ void BINARY_EXPRESSION():
     LITERAL_VALUE_EXPRESSION() (BINARY_OPERATOR() LITERAL_VALUE_EXPRESSION())+
 }
 
-void BINARY_OPERATOR():
-{}
+void BINARY_OPERATOR() #BinaryOp:
+{ Token t = null; }
 {
-    <PLUS> | <MINUS> | <MULTIPLY> | <DIVIDE> | <EQUALITY> | <GT> | <LT>
+    t = <PLUS> | <MINUS> | <MULTIPLY> | <DIVIDE> | <EQUALITY> | <GT> | <LT>
+    {
+        if (t != null)
+        {
+            jjtThis.value = t.image;
+        }
+    }
 }
 
 
@@ -146,6 +155,7 @@ TOKEN: { <OUTPUT:  "OUTPUT"  > }
 TOKEN: { <INPUT:   "INPUT"   > }
 TOKEN: { <IF:      "IF"      > }
 TOKEN: { <THEN:    "THEN"    > }
+TOKEN: { <FOR:     "FOR"     > }
 
 /*** Types                  ***/
 TOKEN: { <INT:    "int"      > }

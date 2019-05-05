@@ -1,0 +1,5 @@
+BEGIN NCUPL
+
+    FOR(counter=0; counter < 10; counter++) OUTPUT "Counter: " counter;
+    
+END

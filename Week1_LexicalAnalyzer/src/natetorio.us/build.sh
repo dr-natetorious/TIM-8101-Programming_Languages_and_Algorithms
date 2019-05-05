@@ -6,7 +6,7 @@ function build_jj(){
   name=$1
   java javacc -OUTPUT_DIRECTORY=${OUTPUT_DIRECTORY}/${name} "${name}.jj"
   javac ${OUTPUT_DIRECTORY}/${name}/*.java
-  jar cvf ${OUTPUT_DIRECTORY}/${name}.jar ${OUTPUT_DIRECTORY}/${name}/*.class
+  jar cf ${OUTPUT_DIRECTORY}/${name}.jar ${OUTPUT_DIRECTORY}/${name}/*.class
 }
 
 function build_jjt(){
@@ -19,7 +19,7 @@ function build_jjt(){
   cp NCU_PL_Lexer_Driver.java ${jjt_out}
   #cp MyVisitor.java ${jjt_out}
   javac ${jjt_out}/*.java
-  jar cvf ${OUTPUT_DIRECTORY}/${name}.tree.jar ${jjt_out}/*.class
+  jar cf ${OUTPUT_DIRECTORY}/${name}.tree.jar ${jjt_out}/*.class 
 }
 
 function header(){
