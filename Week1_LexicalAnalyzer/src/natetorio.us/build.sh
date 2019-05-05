@@ -17,7 +17,7 @@ function build_jjt(){
   java javacc -OUTPUT_DIRECTORY=${jjt_out} "${jjt_out}/NCU_PL.jj"
 
   cp NCU_PL_Lexer_Driver.java ${jjt_out}
-  cp MyVisitor.java ${jjt_out}
+  #cp MyVisitor.java ${jjt_out}
   javac ${jjt_out}/*.java
   jar cvf ${OUTPUT_DIRECTORY}/${name}.tree.jar ${jjt_out}/*.class
 }

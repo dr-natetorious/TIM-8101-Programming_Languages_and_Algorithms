@@ -9,6 +9,7 @@ options {
   STATIC = false;
   VISITOR= true;
   MULTI=true;
+  NODE_DEFAULT_VOID=true;
 }
 
 PARSER_BEGIN(NCU_PL_Lexer)
@@ -16,7 +17,7 @@ PARSER_BEGIN(NCU_PL_Lexer)
 PARSER_END(NCU_PL_Lexer)
 
 
-SimpleNode NCU_PL_Program() :
+SimpleNode NCU_PL_Program() #ProgramNode:
 {}
 {
   <BEGIN> <NCUPL>
@@ -41,11 +42,11 @@ void NCU_PL_Statement():
 void STATEMENT():
 {}
 {
-    LOOKAHEAD(2) OUTPUT_STATEMENT()     |
-    LOOKAHEAD(2) INPUT_STATEMENT()      |
-    LOOKAHEAD(2) VARIABLE_DECLARATION() | 
-    LOOKAHEAD(2) VARIABLE_ASSIGNMENT()  |
-    LOOKAHEAD(2) IF_THEN_STATEMENT()
+    LOOKAHEAD(2) (OUTPUT_STATEMENT() #OutputStatement)     |
+    LOOKAHEAD(2) (INPUT_STATEMENT() #InputStatement)      |
+    LOOKAHEAD(2) (VARIABLE_DECLARATION() #VarDeclareStatement) | 
+    LOOKAHEAD(2) (VARIABLE_ASSIGNMENT() #VarAssignmentStatement)  |
+    LOOKAHEAD(2) (IF_THEN_STATEMENT() #IfStatement)
 }
 
 void OUTPUT_STATEMENT():
@@ -63,19 +64,25 @@ void INPUT_STATEMENT():
 void VARIABLE_DECLARATION():
 {}
 {
-    VARIABLE_TYPE() <IDENTIFIER>
+    VARIABLE_TYPE() NAME()
 }
 
 void VARIABLE_TYPE():
 {}
 {
-    <INT> | <BOOL> | <STRING>
+    <INT> #Int | <BOOL> #Bool | <STRING> #String
+}
+
+void NAME() #Name:
+{}
+{
+    <IDENTIFIER>
 }
 
 void VARIABLE_ASSIGNMENT():
 {}
 {
-    <IDENTIFIER> <EQUALS> EXPRESSION()
+    NAME() <EQUALS> EXPRESSION()
 }
 
 void IF_THEN_STATEMENT():
@@ -89,16 +96,16 @@ void IF_THEN_STATEMENT():
 void EXPRESSION():
 {}
 {
-    LOOKAHEAD(5) BINARY_EXPRESSION()        |
-    LOOKAHEAD(5) IDENTIFIER_EXPRESSION()    |
-    LOOKAHEAD(5) LITERAL_VALUE_EXPRESSION() |
-    LOOKAHEAD(5) PARENTHESIZED_EXPRESSION()
+    LOOKAHEAD(5) BINARY_EXPRESSION() #BinaryExpression        |
+    LOOKAHEAD(5) IDENTIFIER_EXPRESSION() #IdentifierExpression   |
+    LOOKAHEAD(5) LITERAL_VALUE_EXPRESSION() #LiteralValueExpression |
+    LOOKAHEAD(5) PARENTHESIZED_EXPRESSION() #ParenthsizedExpression
 }
 
 void IDENTIFIER_EXPRESSION():
 {}
 {
-    <IDENTIFIER> <EQUALS> EXPRESSION()
+    NAME() <EQUALS> EXPRESSION()
 }
 
 void LITERAL_VALUE_EXPRESSION():
