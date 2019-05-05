@@ -1,10 +1,3 @@
-# Section 1: Week 1: Lexical Parsing
-
-The primary [Assignment](Assignment.md) delt with [building](src/natetorio.us) a simple language called [NCU/PL](src/LDK/NCUPL-grammar.pdf).
-
-A NCU/PL script is provided inline other [examples](src/LDK/test-programs) are provided with the LDK:
-
-```bash
 # Start the string with multi-token keyword
 NCU BEGIN
 
@@ -21,9 +14,8 @@ NCU BEGIN
     OUTPUT "Hello " + name + ", no beer for you for " + (21-age)+ " year";
 
   # Suggest coffee is better anyways...
-  IF age >= 21 THEN
+  IF (age >= 21) THEN
     OUTPUT "Coffee probably makes the misses happier";
 
 # Conclude the script
 END
-```

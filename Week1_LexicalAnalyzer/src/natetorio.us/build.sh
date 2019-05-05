@@ -42,5 +42,6 @@ test_file ../../LDK/tests-programs/output-repro.ncupl
 test_file ../../LDK/tests-programs/hello-world.ncupl
 test_file ../../LDK/tests-programs/budget-calculator.ncupl
 test_file ../../LDK/tests-programs/age-calculator.ncupl
+test_file ../../LDK/tests-programs/can-have-beer.ncupl
 
 popd
