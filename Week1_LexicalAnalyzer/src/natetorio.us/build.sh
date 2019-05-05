@@ -72,4 +72,5 @@ function do_jjt_section(){
   popd
 }
 
+do_jj_section
 do_jjt_section 

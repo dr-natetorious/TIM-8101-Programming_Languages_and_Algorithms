@@ -23,4 +23,4 @@ ENV OUTPUT_DIRECTORY=/src/out/
 # Setup Remote Debugger from the container
 # Start the debugger with command like
 #   java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=5005,suspend=y NCU_PL_Lexer_Driver {filename}
-EXPOSE 5005
+#EXPOSE 5005
