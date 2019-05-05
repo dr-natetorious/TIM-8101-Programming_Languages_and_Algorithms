@@ -1,0 +1,202 @@
+/**
+ * Northcentral University
+ * School of Business & Technology Management
+ * JavaCC file for NCU/PL
+ */
+ 
+options {
+  JAVA_UNICODE_ESCAPE = true;
+  STATIC = false;
+  VISITOR= true;
+  MULTI=true;
+  NODE_DEFAULT_VOID=true;
+}
+
+PARSER_BEGIN(NCU_PL_Lexer)
+  public class NCU_PL_Lexer {}
+PARSER_END(NCU_PL_Lexer)
+
+
+SimpleNode NCU_PL_Program() #SimpleNode:
+{}
+{
+  <BEGIN> <NCUPL>
+  ( NCU_PL_Statement() )*
+  <END>
+  <EOF>
+  
+  {
+      return jjtThis;
+  }
+}
+
+/***** Statements *****/
+
+void NCU_PL_Statement() #void:
+{}
+{
+    STATEMENT()
+    <SEMICOLON>
+}
+
+void STATEMENT() #void:
+{}
+{
+    LOOKAHEAD(2) OUTPUT_STATEMENT()     |
+    LOOKAHEAD(2) INPUT_STATEMENT()      |
+    LOOKAHEAD(2) VARIABLE_DECLARATION() | 
+    LOOKAHEAD(2) VARIABLE_ASSIGNMENT()  |
+    LOOKAHEAD(2) IF_THEN_STATEMENT() | 
+    LOOKAHEAD(2) FOR_STATEMENT()
+}
+
+void OUTPUT_STATEMENT() #OutputStatement:
+{}
+{
+    <OUTPUT> EXPRESSION()
+}
+
+void INPUT_STATEMENT() #InputStatement:
+{}
+{
+    <INPUT> EXPRESSION() [<IDENTIFIER>]
+}
+
+void VARIABLE_DECLARATION() #VarDeclarationStatement:
+{}
+{
+    VARIABLE_TYPE() NAME()
+}
+
+void VARIABLE_TYPE() #TypeName:
+{}
+{
+    <INT> #Int | <BOOL> #Bool | <STRING> #String
+}
+
+void NAME() #Name:
+{ Token t;}
+{
+    t = <IDENTIFIER>
+    {
+        jjtThis.value = t.image;
+    }
+}
+
+void VARIABLE_ASSIGNMENT():
+{}
+{
+    NAME() <EQUALS> EXPRESSION()
+}
+
+void IF_THEN_STATEMENT():
+{}
+{
+    <IF> EXPRESSION() <THEN> STATEMENT()
+}
+
+void FOR_STATEMENT():
+{}
+{
+    <FOR> <LEFT_PAREN> [EXPRESSION()] <SEMICOLON> [EXPRESSION()] <SEMICOLON> [EXPRESSION()] <RIGHT_PAREN> STATEMENT()
+}
+
+/***** Expressions *****/
+void EXPRESSION():
+{}
+{
+    LOOKAHEAD(5) BINARY_EXPRESSION() |
+    LOOKAHEAD(5) IDENTIFIER_EXPRESSION() |
+    LOOKAHEAD(5) LITERAL_VALUE_EXPRESSION()  |
+    LOOKAHEAD(5) PARENTHESIZED_EXPRESSION() 
+}
+
+void IDENTIFIER_EXPRESSION():
+{}
+{
+    NAME() <EQUALS> EXPRESSION()
+}
+
+void LITERAL_VALUE_EXPRESSION() #Literal:
+{Token t;}
+{    
+    (t = <STRING_LITERAL> {jjtThis.value = t.image;} #StrLiteral) | 
+    (t = <INTEGER_LITERAL> {jjtThis.value = t.image;} #IntLiteral) | 
+    (t = <BOOLEAN_LITERAL> {jjtThis.value = t.image;} #BoolLiteral) | 
+    ( NAME() #Id) |
+    <LEFT_PAREN> #LPAREN LITERAL_VALUE_EXPRESSION() <RIGHT_PAREN> #RPARAN
+}
+
+void PARENTHESIZED_EXPRESSION():
+{}
+{
+    <LEFT_PAREN> #LPAREN EXPRESSION() <RIGHT_PAREN> #RPARAN
+}
+
+
+void BINARY_EXPRESSION():
+{}
+{
+    LITERAL_VALUE_EXPRESSION() (BINARY_OPERATOR() LITERAL_VALUE_EXPRESSION())+
+}
+
+void BINARY_OPERATOR() #BinaryOp:
+{ Token t = null; }
+{
+    t = <PLUS> | <MINUS> | <MULTIPLY> | <DIVIDE> | <EQUALITY> | <GT> | <LT>
+    {
+        if (t != null)
+        {
+            jjtThis.value = t.image;
+        }
+    }
+}
+
+
+/*** Reserved words         ***/
+TOKEN: { <NCUPL:   "NCUPL"   > }
+TOKEN: { <BEGIN:   "BEGIN"   > }
+TOKEN: { <END:     "END"     > }
+TOKEN: { <OUTPUT:  "OUTPUT"  > }
+TOKEN: { <INPUT:   "INPUT"   > }
+TOKEN: { <IF:      "IF"      > }
+TOKEN: { <THEN:    "THEN"    > }
+TOKEN: { <FOR:     "FOR"     > }
+
+/*** Types                  ***/
+TOKEN: { <INT:    "int"      > }
+TOKEN: { <BOOL:   "bool"     > }
+TOKEN: { <STRING: "string"   > }
+
+/*** Symbols                ***/ 
+TOKEN: { <SEMICOLON:     ";" > }
+TOKEN: { <LEFT_PAREN:    "(" > }
+TOKEN: { <RIGHT_PAREN:   ")" > }
+TOKEN: { <PLUS:          "+" > }
+TOKEN: { <MINUS:         "-" > }
+TOKEN: { <MULTIPLY:      "*" > }
+TOKEN: { <DIVIDE:        "/" > }
+TOKEN: { <EQUALITY:     "==" > }
+TOKEN: { <EQUALS:        "=" > }
+TOKEN: { <GT:            ">" > }
+TOKEN: { <LT:            "<" > }
+
+/*** boolean literals are either "true" or "false" ***/
+TOKEN: { <BOOLEAN_LITERAL: "true" | "false" > }
+
+/*** integer literals are at least one number ***/
+TOKEN: { <INTEGER_LITERAL: (["0"-"9"])+ > }
+
+/*** integer literals are at least one number ***/
+TOKEN: { <STRING_LITERAL: "\"" (~["\"","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\""> }
+
+/*** identifiers begin with an underscore or a letter, followed by an optional number of letters, numbers, or underscores ***/
+TOKEN: { <IDENTIFIER: (["a"-"z"]|["A"-"Z"]|"_")+((["a"-"z","A"-"Z","0"-"9","_"])*)? > } 
+
+/*** Comments ***/
+MORE: { "#": IN_COMMENT }
+<IN_COMMENT> SKIP: { <COMMENT: "\n"|"\r"|"\r\n">: DEFAULT }
+<IN_COMMENT> MORE: { <~[]> }
+
+/*** Skip Whitespace ***/
+SKIP: { "\n"|"\r"|"\n\r"|" "|"\t" }

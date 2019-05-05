@@ -1,6 +1,12 @@
 {
 	"version": "0.2.0",
 	"configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch)",
+            "request": "launch",
+            "mainClass": "NCU_PL_Lexer_Driver",
+        },
 		{
             "type": "java",
             "name": "Debug (Attach)",
