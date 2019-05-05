@@ -66,6 +66,7 @@ function do_jjt_section(){
   test_file ../../../LDK/tests-programs/output-repro.ncupl
   test_file ../../../LDK/tests-programs/budget-calculator.ncupl
   test_file ../../../LDK/tests-programs/age-calculator.ncupl
+  test_file ../../../LDK/tests-programs/for-loop.ncupl
   popd
 }
 
