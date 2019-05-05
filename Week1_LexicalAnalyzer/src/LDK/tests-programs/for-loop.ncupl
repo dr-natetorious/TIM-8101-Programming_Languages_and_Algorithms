@@ -1,3 +1,9 @@
+# =================================================
+# Nate Bachmeier
+# TIM-8110: Programming Languages and Algorithms
+# NorthCentral Univesity
+# (c) 2019.05.05
+# =================================================
 BEGIN NCUPL
 
     FOR(foo = 0 ; bar < 7 ; cheese = cheese + 1) OUTPUT "Counter: ";

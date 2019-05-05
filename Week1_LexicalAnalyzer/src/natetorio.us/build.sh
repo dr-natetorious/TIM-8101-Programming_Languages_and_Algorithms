@@ -1,5 +1,10 @@
 #!/bin/bash
-
+# =================================================
+# Nate Bachmeier
+# TIM-8110: Programming Languages and Algorithms
+# NorthCentral Univesity
+# (c) 2019.05.05
+# =================================================
 OUTPUT_DIRECTORY=/src/out/
 
 function build_jj(){

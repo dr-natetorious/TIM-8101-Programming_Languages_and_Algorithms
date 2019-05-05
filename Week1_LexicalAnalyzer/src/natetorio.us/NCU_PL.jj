@@ -2,6 +2,11 @@
  * Northcentral University
  * School of Business & Technology Management
  * JavaCC file for NCU/PL
+ * 
+ * Nate Bachmeier
+ * TIM-8110: Programming Languages and Algorithms
+ * NorthCentral University (NCU)
+ * 2019.05.05
  */
  
 options {

@@ -1,8 +1,10 @@
-/**** 
- * Copyright (c) 2019, Nate Bachmeier.
+/* Copyright (c) 2019, Nate Bachmeier.
  * All rights reserved.
+ * 
+ * TIM-8110: Programming Languages and Algorithms
+ * NorthCentral University (NCU)
+ * 2019.05.05
  */
-
 
 options {
   LOOKAHEAD = 1;

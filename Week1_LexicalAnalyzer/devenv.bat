@@ -1,4 +1,8 @@
 @ECHO ON
+@ECHO =================================
+@ECHO (c) Nate Bachmeier
+@ECHO https://github.com/dr-natetorious
+@ECHO =================================
 @SETLOCAL enableextensions enabledelayedexpansion
 @SET base_path=%~dp0
 @PUSHD %base_path%
