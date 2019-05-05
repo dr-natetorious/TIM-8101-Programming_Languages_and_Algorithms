@@ -55,7 +55,7 @@ function do_jj_section(){
   test_file ../../LDK/tests-programs/hello-world.ncupl
   test_file ../../LDK/tests-programs/budget-calculator.ncupl
   test_file ../../LDK/tests-programs/age-calculator.ncupl
-  test_file ../../LDK/tests-programs/can-have-beer.ncupl
+  test_file ../../LDK/tests-programs/can-have-beer.ncucpl
   popd
 }
 
@@ -68,7 +68,7 @@ function do_jjt_section(){
   test_file ../../../LDK/tests-programs/budget-calculator.ncupl
   test_file ../../../LDK/tests-programs/age-calculator.ncupl
   test_file ../../../LDK/tests-programs/for-loop.ncupl
-  test_file ../../../LDK/tests-programs/can-have-beer.ncupl
+  test_file ../../../LDK/tests-programs/can-have-beer.ncucpl
   popd
 }
 
