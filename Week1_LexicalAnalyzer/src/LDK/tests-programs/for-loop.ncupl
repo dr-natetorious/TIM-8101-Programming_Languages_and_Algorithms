@@ -1,0 +1,5 @@
+BEGIN NCUPL
+
+    FOR(foo = 0 ; bar < 7 ; cheese = cheese + 1) OUTPUT "Counter: ";
+
+END
