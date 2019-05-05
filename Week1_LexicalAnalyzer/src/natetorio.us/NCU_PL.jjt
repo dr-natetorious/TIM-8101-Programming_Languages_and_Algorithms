@@ -9,7 +9,7 @@ options {
   STATIC = false;
   VISITOR= true;
   MULTI=true;
-  NODE_DEFAULT_VOID=true;
+  NODE_DEFAULT_VOID=false;
 }
 
 PARSER_BEGIN(NCU_PL_Lexer)
@@ -140,16 +140,10 @@ void BINARY_EXPRESSION():
     LITERAL_VALUE_EXPRESSION() (BINARY_OPERATOR() LITERAL_VALUE_EXPRESSION())+
 }
 
-void BINARY_OPERATOR() #BinaryOp:
-{ Token t = null; }
+void BINARY_OPERATOR() #void:
+{}
 {
-    t = <PLUS> | <MINUS> | <MULTIPLY> | <DIVIDE> | <EQUALITY> | <GT> | <LT>
-    {
-        if (t != null)
-        {
-            jjtThis.value = t.image;
-        }
-    }
+    <PLUS> #Plus | <MINUS> #Minus | <MULTIPLY> #Multi | <DIVIDE> #Divide | <EQUALITY> #Equality | <GT> #GT | <LT> #LT
 }
 
 
