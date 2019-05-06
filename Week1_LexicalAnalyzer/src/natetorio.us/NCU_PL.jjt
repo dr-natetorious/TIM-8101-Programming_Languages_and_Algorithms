@@ -100,7 +100,13 @@ void IF_THEN_STATEMENT():
 void FOR_STATEMENT():
 {}
 {
-    <FOR> <LEFT_PAREN> [EXPRESSION()] <SEMICOLON> [EXPRESSION()] <SEMICOLON> [EXPRESSION()] <RIGHT_PAREN> STATEMENT()
+    <FOR>
+        <LEFT_PAREN>
+            [EXPRESSION() #Initialize] <SEMICOLON>
+            [EXPRESSION() #Conditional] <SEMICOLON>
+            [EXPRESSION() #PostAction]
+        <RIGHT_PAREN>
+            STATEMENT() #ForActionStatment
 }
 
 /***** Expressions *****/

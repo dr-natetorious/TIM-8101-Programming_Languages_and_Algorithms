@@ -4,6 +4,7 @@
 # NorthCentral Univesity
 # (c) 2019.05.05
 # =================================================
+
 BEGIN NCUPL
   OUTPUT "foo bar" + cheese + "cheese" ;
 END  
