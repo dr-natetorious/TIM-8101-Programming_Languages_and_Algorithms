@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Rosyln": {
+      "commandName": "Project",
+      "commandLineArgs": "s:\\git\\mirtmastery\\service-MasteryMaker\\Service\\MasteryMakerService.Core"
+    }
+  }
+}
