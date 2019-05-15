@@ -39,20 +39,36 @@ namespace Rosyln
             // Find which parameters are not checked...
             var parameters = node.ParameterList.Parameters.Select(p => p.Identifier.Text);
             var statements = new List<StatementSyntax>();
-            foreach (var parameter in parameters)
+
+            // Get friendly text for declarer...
+            string declaredBy = node.Identifier.Text;
+            if (node.Parent is ClassDeclarationSyntax classDeclaration)
             {
-                if (checkedParameters.Contains(parameter))
+                declaredBy = $"{classDeclaration.Identifier.Text}::{declaredBy}";
+            }
+
+            foreach (var parameterName in parameters)
+            {
+                if (checkedParameters.Contains(parameterName))
+                {
+                    continue;
+                }
+
+                var parameterInfo = node.ParameterList.Parameters.First(
+                    p => p.Identifier.Text == parameterName);
+
+                if (parameterInfo.Default != null)
                 {
                     continue;
                 }
 
                 var check = SyntaxFactory.ParseStatement(
-                    $@"
-                        // Check parameter...
-                        if({parameter} == null){{
-                            throw new System.ArgumentNullException(""{parameter}"");
-                        }}
-
+                    $@"// Check parameter...
+                       if({parameterName} == null){{
+                           throw new System.ArgumentNullException(
+                               ""{parameterName}"",
+                               ""{parameterName} was not provided to {declaredBy}."");
+                       }}
                     ");
 
                 statements.Add(check);

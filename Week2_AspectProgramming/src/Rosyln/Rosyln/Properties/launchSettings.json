@@ -2,7 +2,7 @@
   "profiles": {
     "Rosyln": {
       "commandName": "Project",
-      "commandLineArgs": "s:\\git\\mirtmastery\\service-MasteryMaker\\Service\\MasteryMakerService.Core"
+      "commandLineArgs": "s:\\\\git\\\\mirtmastery\\\\branches\\\\service-MasteryMaker\\\\Service\\MasteryMakerService.Core\\Calculations\\Strategies\\"
     }
   }
 }
