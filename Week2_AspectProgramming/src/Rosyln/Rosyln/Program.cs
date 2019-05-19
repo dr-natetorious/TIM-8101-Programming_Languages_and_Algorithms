@@ -16,7 +16,7 @@ namespace Rosyln
             var directory = new DirectoryInfo(args[0]);
             var workspace = new AdhocWorkspace();
             var texas = new StyleWriter();
-                        
+            var dict_rewrite = new UseCaseInsensitiveDictionaryRewrite();        
             foreach (var file in directory.GetFiles("*.cs", SearchOption.AllDirectories))
             {
                 Console.WriteLine($"{file.FullName}...");
@@ -27,10 +27,11 @@ namespace Rosyln
                     .AddSyntaxTrees(tree);
 
                 var model = compilation.GetSemanticModel(tree);
+                var rewrite = dict_rewrite.Visit(root);
 
-                var white = new MethodWalker(root, model);
-                
-                var rewrite = texas.Visit(white.Visit(root));
+                //var white = new MethodWalker(root, model);
+                //var rewrite = texas.Visit(white.Visit(root));
+
                 using (var sw = new StreamWriter(file.FullName, append: false, encoding: Encoding.UTF8))
                 {
                     var formatted = Formatter.Format(rewrite, workspace).ToFullString();
