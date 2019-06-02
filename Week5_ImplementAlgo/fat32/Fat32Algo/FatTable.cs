@@ -66,6 +66,16 @@ namespace Fat32Algo
         /// <param name="contents">The contents to be stored.</param>
         public void WriteFile(string fileName, string contents)
         {
+            WriteFile(fileName, Encoding.UTF8.GetBytes(contents));
+        }
+
+        /// <summary>
+        /// Persists the <paramref name="contents"/> into the <see cref="FatTable.Entries"/>.
+        /// </summary>
+        /// <param name="fileName">The name of the file</param>
+        /// <param name="contents">The contents to be stored.</param>
+        public void WriteFile(string fileName, byte[] contents)
+        {
             if (this.FileNames.ContainsKey(fileName))
             {
                 this.DeleteFile(fileName);
@@ -99,7 +109,23 @@ namespace Fat32Algo
         /// </summary>
         /// <param name="fileName">The name of the file to be returned</param>
         /// <returns>The file contents</returns>
-        public string ReadFile(string fileName)
+        public string ReadTextFile(string fileName)
+        {
+            var contents = ReadFile(fileName);
+            if (contents == null)
+            {
+                return null;
+            }
+
+            return Encoding.UTF8.GetString(contents);
+        }
+
+        /// <summary>
+        /// Retreives the file from the <see cref="FatTable.Entries"/>.
+        /// </summary>
+        /// <param name="fileName">The name of the file to be returned</param>
+        /// <returns>The file contents</returns>
+        public byte[] ReadFile(string fileName)
         {
             if (this.FileNames.ContainsKey(fileName) == false)
             {
@@ -107,10 +133,10 @@ namespace Fat32Algo
             }
 
             FileEntry head = this.Entries[this.FileNames[fileName]];
-            var sb = new StringBuilder();
+            var memory = new List<byte>();
             while (true)
             {
-                sb.Append(head.Page);
+                memory.AddRange(head.Page.ToArray());
                 if (head.NextPage == FileEntry.EndOfFileChar)
                 {
                     break;
@@ -119,7 +145,7 @@ namespace Fat32Algo
                 head = this.Entries[head.NextPage.Value];
             }
 
-            return sb.ToString();
+            return memory.ToArray();
         }
 
         /// <summary>
@@ -137,6 +163,7 @@ namespace Fat32Algo
             do
             {
                 head.Busy = false;
+                head.Page = null;
                 this.dirtyPages.Enqueue(head.Id);
                 head = this.Entries[head.NextPage.Value];
             } while (head != null);
@@ -183,25 +210,17 @@ namespace Fat32Algo
             return null;
         }
 
-        private IEnumerable<string> GetPages(string contents)
+        /// <summary>
+        /// Breaks the <paramref name="contents"/> into separate pages.
+        /// </summary>
+        /// <param name="contents">The contents to be partitioned</param>
+        /// <returns>Zero or more pages up to the specified <see cref="PageSize"/>.</returns>
+        private IEnumerable<Memory<byte>> GetPages(Memory<byte> contents)
         {
-            using (var sr = new StringReader(contents))
+            for (var ix = 0; ix < contents.Length; ix += this.PageSize)
             {
-                var buffer = new char[this.PageSize];
-                int offset = 0;
-                while (true)
-                {
-                    var read_count = sr.ReadBlock(buffer, index: 0, count: buffer.Length);
-                    offset += read_count;
-
-                    yield return new string(buffer);
-
-                    // check if this is the last page
-                    if (offset >= contents.Length)
-                    {
-                        break;
-                    }
-                }
+                var buffer = contents.Slice(ix, this.PageSize);
+                yield return buffer;
             }
         }
     }

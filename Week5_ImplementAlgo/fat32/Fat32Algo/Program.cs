@@ -14,7 +14,7 @@ namespace Fat32Algo
             var expected = RandomString(fatTable.PageSize * 5);
             fatTable.WriteFile("taco.txt", expected);
 
-            var actual = fatTable.ReadFile("taco.txt");
+            var actual = fatTable.ReadTextFile("taco.txt");
             if (expected != actual)
             {
                 Console.WriteLine("Sad.");

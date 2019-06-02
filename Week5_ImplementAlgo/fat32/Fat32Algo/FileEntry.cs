@@ -10,7 +10,7 @@ namespace Fat32Algo
 
         public int Id { get; }
 
-        public string Page { get; set; }
+        public Memory<byte> Page { get; set; }
         public int? NextPage { get; set; }
         public bool Busy { get; set; }
 
