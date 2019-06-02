@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
 namespace Fat32Algo
@@ -25,7 +24,10 @@ namespace Fat32Algo
         /// </summary>
         private int nextFreePage = 0;
 
-        private Queue<int> dirtyPages = new Queue<int>();
+        /// <summary>
+        /// Gets a queue of dirty pages to pull from before searching.
+        /// </summary>
+        private readonly Queue<int> dirtyPages = new Queue<int>();
 
         /// <summary>
         /// Gets the entries within the table.

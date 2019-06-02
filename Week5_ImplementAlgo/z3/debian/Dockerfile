@@ -23,4 +23,7 @@ RUN git clone https://github.com/Z3Prover/z3 \
   && make install
 
 # Install Remote Debugger...
+RUN apt-get -y install python3-pip \
+  && pip3 install ptvsd
+
 EXPOSE 5678
