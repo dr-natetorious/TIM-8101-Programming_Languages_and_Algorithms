@@ -26,9 +26,9 @@ namespace Fat32Algo
         static string RandomString(int length)
         {
             var sb = new StringBuilder(length);
-            for(var ix=0; ix<length; ix++)
+            for (var ix = 0; ix < length; ix++)
             {
-                sb.Append('A' + (char)(ix % 26));
+                sb.Append((char)((int)'A' + (ix % 26)));
             }
 
             return sb.ToString();

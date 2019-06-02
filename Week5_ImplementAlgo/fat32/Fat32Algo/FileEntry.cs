@@ -18,5 +18,10 @@ namespace Fat32Algo
         {
             this.Id = entryId;
         }
+
+        public override string ToString()
+        {
+            return $"[{(this.Busy? "InUse" : "Free")}] {this.Id} -> {this.NextPage}";
+        }
     }
 }

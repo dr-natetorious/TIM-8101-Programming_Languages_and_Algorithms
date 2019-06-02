@@ -19,10 +19,20 @@ namespace Fat32Algo
             this.Entries = new FileEntry[maxBlocks];
             this.FileNames = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
             this.PageSize = pageSize;
+
+            for(var ix=0; ix<maxBlocks; ix++)
+            {
+                this.Entries[ix] = new FileEntry(ix);
+            }
         }
 
         public void WriteFile(string fileName, string contents)
         {
+            if (this.FileNames.ContainsKey(fileName))
+            {
+                this.DeleteFile(fileName);
+            }
+
             FileEntry head = null;
             foreach (var page in GetPages(contents))
             {
@@ -69,6 +79,18 @@ namespace Fat32Algo
             return sb.ToString();
         }
 
+        public void DeleteFile(string fileName)
+        {
+            var head = this.Entries[this.FileNames[fileName]];
+            do
+            {
+                head.Busy = false;
+                head = this.Entries[head.NextPage.Value];
+            } while (head != null);
+
+            this.FileNames.Remove(fileName);
+        }
+
         private FileEntry GetNextFreeEntry()
         {
             return this.Entries.FirstOrDefault(e => e.Busy == false);
@@ -82,13 +104,13 @@ namespace Fat32Algo
                 int offset = 0;
                 while (true)
                 {
-                    var read_count = sr.ReadBlock(buffer, offset, this.PageSize);
+                    var read_count = sr.ReadBlock(buffer, index: 0, count: buffer.Length);
                     offset += read_count;
 
                     yield return new string(buffer);
 
                     // check if this is the last page
-                    if (read_count < this.PageSize)
+                    if (offset >= contents.Length)
                     {
                         break;
                     }
