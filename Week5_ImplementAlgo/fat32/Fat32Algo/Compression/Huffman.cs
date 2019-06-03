@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -17,7 +16,7 @@ namespace Fat32Algo.Compression
         /// <summary>
         /// Gets a constant for the maximum search space
         /// </summary>
-        private static int R = byte.MaxValue;
+        private static readonly int R = byte.MaxValue;
 
         /// <summary>
         /// Compress the content into the fewest number of bits using Huffman Compressions

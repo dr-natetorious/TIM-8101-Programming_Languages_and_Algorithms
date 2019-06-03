@@ -5,7 +5,7 @@ namespace Fat32Algo
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var fatTable = new FatTable(
                 maxBlocks: 1024,
