@@ -11,6 +11,9 @@ namespace Fat32Algo.Compression
     /// The code builds a tree of frequently used byte values, 
     ///     such that frequently used values will have a short bit sequence
     /// </summary>
+    /// <remarks>
+    /// Based on description from Sedgewick, R. (2014). Algorithms, Fourth Edition. 
+    /// </remarks>
     class Huffman
     {
         /// <summary>
@@ -27,7 +30,7 @@ namespace Fat32Algo.Compression
         /// </remarks>
         /// <param name="content">The byte stream to be compressed.</param>
         /// <returns>The compressed payload</returns>
-        public byte[] Compress(byte[] content)
+        public static byte[] Compress(byte[] content)
         {
             // Determine the character frequencies...
             int[] frequencies = new int[R];
@@ -76,7 +79,7 @@ namespace Fat32Algo.Compression
         /// </summary>
         /// <param name="content">The result of <see cref="Compress(byte[])"/> operation.</param>
         /// <returns>The original contents</returns>
-        public byte[] Decompress(byte[] content)
+        public static byte[] Decompress(byte[] content)
         {
             // Create a binary reader for traversing the structure..
             using (var reader = new BinaryReader(new MemoryStream(content)))
@@ -109,7 +112,7 @@ namespace Fat32Algo.Compression
         /// <param name="bitArray">The code words to be decoded</param>
         /// <param name="root">The tree used for forming the code words</param>
         /// <returns>The decoded message</returns>
-        private byte[] Decoder(BitArray bitArray, Node root)
+        private static byte[] Decoder(BitArray bitArray, Node root)
         {
             var head = root;
             var decoded = new List<byte>();
@@ -144,7 +147,7 @@ namespace Fat32Algo.Compression
         /// These strings need to be translated into BitArray values.
         /// </remarks>
         /// <param name="root">The tree to be traversed</param>
-        /// <returns>Value[ix] = CodeWord Bit Sequence</returns>
+        /// <returns>Value[ix] = CodeWord Bit Sequence (eg "1011")</returns>
         private static string[] BuildCode(Node root)
         {
             string[] codes = new string[R];
@@ -172,8 +175,7 @@ namespace Fat32Algo.Compression
         /// <summary>
         /// Utility to convert a bit array into byte[]
         /// </summary>
-        /// <param name="bits"></param>
-        /// <returns></returns>
+        /// <param name="bits">The bits to convert to byte[]</param>
         private static byte[] ToByteArray(BitArray bits)
         {
             int numBytes = bits.Count / 8;

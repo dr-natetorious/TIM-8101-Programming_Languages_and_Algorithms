@@ -78,11 +78,18 @@ namespace Fat32Algo
         /// <param name="contents">The contents to be stored.</param>
         public void WriteFile(string fileName, byte[] contents)
         {
+            // Check if the file already existed
             if (this.FileNames.ContainsKey(fileName))
             {
+                // Then clean up any resources that it held
                 this.DeleteFile(fileName);
             }
 
+#if TRANSPARENT_COMPRESSION
+            contents = Compression.Huffman.Compress(contents);
+#endif
+
+            // Write the contents over the required number of pages
             FileEntry head = null;
             foreach (var page in GetPages(contents))
             {
@@ -147,7 +154,11 @@ namespace Fat32Algo
                 head = this.Entries[head.NextPage.Value];
             }
 
+#if TRANSPARENT_COMPRESSION
+            return contents = Compression.Huffman.Decompress(memory.ToArray());
+#else
             return memory.ToArray();
+#endif
         }
 
         /// <summary>
