@@ -171,7 +171,7 @@ namespace Fat32Algo.Compression
         }
 
         /// <summary>
-        /// Builds the code words from a given <paramref name="root"/>.
+        /// Builds the code words from a given <paramref name="node"/>.
         /// </summary>
         /// <param name="codes">The code words structure.</param>
         /// <param name="node">The current node in the tree.</param>
