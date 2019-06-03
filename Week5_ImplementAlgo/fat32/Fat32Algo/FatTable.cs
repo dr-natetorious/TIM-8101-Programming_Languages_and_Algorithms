@@ -1,53 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿// <copyright file="FatTable.cs" company="Nate Bachmeier">
+// Copyright (c) Nate Bachmeier. All rights reserved.
+// </copyright>
 
 namespace Fat32Algo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     /// <summary>
     /// Implements a File Allocation Table
-    /// 
+    ///
     /// It supports:
     /// - <see cref="WriteFile(string, string)"/> to create a file
     /// - <see cref="ReadFile(string)"/> to retrive the file
     /// - <see cref="DeleteFile(string)"/> to release the resources
-    /// 
+    ///
     /// When a file is persisted into the FAT it is broken into pages
-    /// 
-    /// If a file spans multiple pages then it uses a linked list structure 
+    ///
+    /// If a file spans multiple pages then it uses a linked list structure.
     /// to find the next file entry.
     /// </summary>
-    partial class FatTable
+    public partial class FatTable
     {
-        /// <summary>
-        /// Gets the cached starting point to look for the next page
-        /// </summary>
-        private int nextFreePage = 0;
-
         /// <summary>
         /// Gets a queue of dirty pages to pull from before searching.
         /// </summary>
         private readonly Queue<int> dirtyPages = new Queue<int>();
 
         /// <summary>
-        /// Gets the entries within the table.
+        /// Gets the cached starting point to look for the next page.
         /// </summary>
-        public FileEntry[] Entries { get; }
-
-        /// <summary>
-        /// Get the maximum content length that can be held in a single <see cref="FileEntry"/>.
-        /// </summary>
-        public int PageSize { get; }
-
-        /// <summary>
-        /// Gets a map of filenames to their head node.
-        /// </summary>
-        public Dictionary<string, int> FileNames { get; }
+        private int nextFreePage = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FatTable"/> class.
         /// </summary>
-        /// <param name="maxBlocks">The number of file entries within the table</param>
+        /// <param name="maxBlocks">The number of file entries within the table.</param>
         /// <param name="pageSize">The size of each <see cref="FileEntry.Page"/>.</param>
         public FatTable(int maxBlocks, int pageSize)
         {
@@ -62,19 +51,34 @@ namespace Fat32Algo
         }
 
         /// <summary>
+        /// Gets the entries within the table.
+        /// </summary>
+        public FileEntry[] Entries { get; }
+
+        /// <summary>
+        /// Gets the maximum content length that can be held in a single <see cref="FileEntry"/>.
+        /// </summary>
+        public int PageSize { get; }
+
+        /// <summary>
+        /// Gets a map of filenames to their head node.
+        /// </summary>
+        public Dictionary<string, int> FileNames { get; }
+
+        /// <summary>
         /// Persists the <paramref name="contents"/> into the <see cref="FatTable.Entries"/>.
         /// </summary>
-        /// <param name="fileName">The name of the file</param>
+        /// <param name="fileName">The name of the file.</param>
         /// <param name="contents">The contents to be stored.</param>
         public void WriteFile(string fileName, string contents)
         {
-            WriteFile(fileName, Encoding.UTF8.GetBytes(contents));
+            this.WriteFile(fileName, Encoding.UTF8.GetBytes(contents));
         }
 
         /// <summary>
         /// Persists the <paramref name="contents"/> into the <see cref="FatTable.Entries"/>.
         /// </summary>
-        /// <param name="fileName">The name of the file</param>
+        /// <param name="fileName">The name of the file.</param>
         /// <param name="contents">The contents to be stored.</param>
         public void WriteFile(string fileName, byte[] contents)
         {
@@ -91,9 +95,9 @@ namespace Fat32Algo
 
             // Write the contents over the required number of pages
             FileEntry head = null;
-            foreach (var page in GetPages(contents))
+            foreach (var page in this.GetPages(contents))
             {
-                var entry = GetNextFreeEntry();
+                var entry = this.GetNextFreeEntry();
                 entry.Page = page;
                 entry.NextPage = null;
                 entry.Busy = true;
@@ -116,11 +120,11 @@ namespace Fat32Algo
         /// <summary>
         /// Retreives the file from the <see cref="FatTable.Entries"/>.
         /// </summary>
-        /// <param name="fileName">The name of the file to be returned</param>
-        /// <returns>The file contents</returns>
+        /// <param name="fileName">The name of the file to be returned.</param>
+        /// <returns>The file contents.</returns>
         public string ReadTextFile(string fileName)
         {
-            var contents = ReadFile(fileName);
+            var contents = this.ReadFile(fileName);
             if (contents == null)
             {
                 return null;
@@ -132,8 +136,8 @@ namespace Fat32Algo
         /// <summary>
         /// Retreives the file from the <see cref="FatTable.Entries"/>.
         /// </summary>
-        /// <param name="fileName">The name of the file to be returned</param>
-        /// <returns>The file contents</returns>
+        /// <param name="fileName">The name of the file to be returned.</param>
+        /// <returns>The file contents.</returns>
         public byte[] ReadFile(string fileName)
         {
             if (this.FileNames.ContainsKey(fileName) == false)
@@ -164,7 +168,7 @@ namespace Fat32Algo
         /// <summary>
         /// Releases the resources used by the specified file.
         /// </summary>
-        /// <param name="fileName"></param>
+        /// <param name="fileName">Name of the file to delete.</param>
         public void DeleteFile(string fileName)
         {
             if (this.FileNames.ContainsKey(fileName) == false)
@@ -179,18 +183,19 @@ namespace Fat32Algo
                 head.Page = null;
                 this.dirtyPages.Enqueue(head.Id);
                 head = this.Entries[head.NextPage.Value];
-            } while (head != null);
+            }
+            while (head != null);
 
             this.FileNames.Remove(fileName);
         }
 
         /// <summary>
         /// Gets the next entry that is not busy
-        /// 
+        ///
         /// This works by linearly scanning the disk forward until we reach the end.
         /// If that does not work then we'll start back at the beginning and loop again.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The next free entry.</returns>
         private FileEntry GetNextFreeEntry()
         {
             // Check if we have any dirty pages that are ready for use...
@@ -200,21 +205,21 @@ namespace Fat32Algo
             }
 
             // Otherwise walk forward until one is found, or hit end of disk...
-            for (var ix = nextFreePage; ix < this.Entries.Length; ix++)
+            for (var ix = this.nextFreePage; ix < this.Entries.Length; ix++)
             {
                 if (this.Entries[ix].Busy == false)
                 {
-                    nextFreePage = ix + 1;
+                    this.nextFreePage = ix + 1;
                     return this.Entries[ix];
                 }
             }
 
             // Start at beginning of the disk and walk forward until our starting location...
-            for (var ix = 0; ix < nextFreePage; ix++)
+            for (var ix = 0; ix < this.nextFreePage; ix++)
             {
                 if (this.Entries[ix].Busy == false)
                 {
-                    nextFreePage = ix + 1;
+                    this.nextFreePage = ix + 1;
                     return this.Entries[ix];
                 }
             }
@@ -226,7 +231,7 @@ namespace Fat32Algo
         /// <summary>
         /// Breaks the <paramref name="contents"/> into separate pages.
         /// </summary>
-        /// <param name="contents">The contents to be partitioned</param>
+        /// <param name="contents">The contents to be partitioned.</param>
         /// <returns>Zero or more pages up to the specified <see cref="PageSize"/>.</returns>
         private IEnumerable<Memory<byte>> GetPages(Memory<byte> contents)
         {

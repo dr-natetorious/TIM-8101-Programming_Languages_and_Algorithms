@@ -1,35 +1,39 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿// <copyright file="Huffman.cs" company="Nate Bachmeier">
+// Copyright (c) Nate Bachmeier. All rights reserved.
+// </copyright>
 
 namespace Fat32Algo.Compression
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
+
     /// <summary>
     /// Implements a variant of the Huffman Compression Algorithm.
-    /// 
-    /// The code builds a tree of frequently used byte values, 
-    ///     such that frequently used values will have a short bit sequence
+    ///
+    /// The code builds a tree of frequently used byte values,
+    ///     such that frequently used values will have a short bit sequence.
     /// </summary>
     /// <remarks>
-    /// Based on description from Sedgewick, R. (2014). Algorithms, Fourth Edition. 
+    /// Based on description from Sedgewick, R. (2014). Algorithms, Fourth Edition.
     /// </remarks>
-    class Huffman
+    public class Huffman
     {
         /// <summary>
-        /// Gets a constant for the maximum search space
+        /// Gets a constant for the maximum search space.
         /// </summary>
         private static readonly int R = byte.MaxValue;
 
         /// <summary>
-        /// Compress the content into the fewest number of bits using Huffman Compressions
+        /// Compress the content into the fewest number of bits using Huffman Compressions.
         /// </summary>
         /// <remarks>
         /// The compressed payload will be laid out in memory as
-        ///     { frequency chart } { compressed bytes }
+        ///     { frequency chart } { compressed bytes }.
         /// </remarks>
         /// <param name="content">The byte stream to be compressed.</param>
-        /// <returns>The compressed payload</returns>
+        /// <returns>The compressed payload.</returns>
         public static byte[] Compress(byte[] content)
         {
             // Determine the character frequencies...
@@ -50,8 +54,14 @@ namespace Fat32Algo.Compression
             {
                 foreach (var c in codes[ch])
                 {
-                    if (c == '1') bits.Add(true);
-                    else bits.Add(false);
+                    if (c == '1')
+                    {
+                        bits.Add(true);
+                    }
+                    else
+                    {
+                        bits.Add(false);
+                    }
                 }
             }
 
@@ -64,10 +74,14 @@ namespace Fat32Algo.Compression
                 using (var byteWriter = new BinaryWriter(memoryStream, Encoding.UTF8, true))
                 {
                     foreach (var frequency in frequencies)
+                    {
                         byteWriter.Write(frequency);
+                    }
 
                     foreach (var word in ToByteArray(compressed))
+                    {
                         byteWriter.Write(word);
+                    }
                 }
 
                 return memoryStream.ToArray();
@@ -78,7 +92,7 @@ namespace Fat32Algo.Compression
         /// Decompress the contents back into the original message.
         /// </summary>
         /// <param name="content">The result of <see cref="Compress(byte[])"/> operation.</param>
-        /// <returns>The original contents</returns>
+        /// <returns>The original contents.</returns>
         public static byte[] Decompress(byte[] content)
         {
             // Create a binary reader for traversing the structure..
@@ -109,9 +123,9 @@ namespace Fat32Algo.Compression
         /// <summary>
         /// Decodes the <paramref name="bitArray"/> code words based on the <paramref name="root"/> tree.
         /// </summary>
-        /// <param name="bitArray">The code words to be decoded</param>
-        /// <param name="root">The tree used for forming the code words</param>
-        /// <returns>The decoded message</returns>
+        /// <param name="bitArray">The code words to be decoded.</param>
+        /// <param name="root">The tree used for forming the code words.</param>
+        /// <returns>The decoded message.</returns>
         private static byte[] Decoder(BitArray bitArray, Node root)
         {
             var head = root;
@@ -142,12 +156,12 @@ namespace Fat32Algo.Compression
         /// Builds the code words from a given <paramref name="root"/>.
         /// </summary>
         /// <remarks>
-        /// Code words are returned as sequences of 1s and 0s 
-        /// 
+        /// Code words are returned as sequences of 1s and 0s.
+        ///
         /// These strings need to be translated into BitArray values.
         /// </remarks>
-        /// <param name="root">The tree to be traversed</param>
-        /// <returns>Value[ix] = CodeWord Bit Sequence (eg "1011")</returns>
+        /// <param name="root">The tree to be traversed.</param>
+        /// <returns>Value[ix] = CodeWord Bit Sequence (eg "1011").</returns>
         private static string[] BuildCode(Node root)
         {
             string[] codes = new string[R];
@@ -159,23 +173,24 @@ namespace Fat32Algo.Compression
         /// <summary>
         /// Builds the code words from a given <paramref name="root"/>.
         /// </summary>
-        /// <param name="codes">The code words structure</param>
-        /// <param name="node">The current node in the tree</param>
-        /// <param name="code">The current prefix so far</param>
+        /// <param name="codes">The code words structure.</param>
+        /// <param name="node">The current node in the tree.</param>
+        /// <param name="code">The current prefix so far.</param>
         private static void BuildCode(string[] codes, Node node, string code)
         {
             if (node.IsLeaf)
             {
                 codes[node.Value] = code;
             }
+
             BuildCode(codes, node.Left, code + '0');
             BuildCode(codes, node.Right, code + '1');
         }
 
         /// <summary>
-        /// Utility to convert a bit array into byte[]
+        /// Utility to convert a bit array into byte[].
         /// </summary>
-        /// <param name="bits">The bits to convert to byte[]</param>
+        /// <param name="bits">The bits to convert to byte[].</param>
         private static byte[] ToByteArray(BitArray bits)
         {
             int numBytes = bits.Count / 8;

@@ -1,14 +1,27 @@
-﻿using System;
+﻿// <copyright file="FileEntry.cs" company="Nate Bachmeier">
+// Copyright (c) Nate Bachmeier. All rights reserved.
+// </copyright>
 
 namespace Fat32Algo
 {
+    using System;
+
     /// <summary>
     /// Represents an entry within the <see cref="FatTable"/>.
     /// </summary>
-    partial class FileEntry
+    public partial class FileEntry
     {
         /// <summary>
-        /// Gets the special character for end of file
+        /// Initializes a new instance of the <see cref="FileEntry"/> class.
+        /// </summary>
+        /// <param name="entryId">The index of this entry.</param>
+        public FileEntry(int entryId)
+        {
+            this.Id = entryId;
+        }
+
+        /// <summary>
+        /// Gets the special character for end of file.
         /// </summary>
         public static int EndOfFileChar { get; } = -1;
 
@@ -18,7 +31,7 @@ namespace Fat32Algo
         public int Id { get; }
 
         /// <summary>
-        /// Gets the memory block that is up to <see cref="FatTable.PageSize"/>.
+        /// Gets or sets the memory block that is up to <see cref="FatTable.PageSize"/>.
         /// </summary>
         public Memory<byte> Page { get; set; }
 
@@ -28,26 +41,17 @@ namespace Fat32Algo
         public int? NextPage { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating wheather this entry is in use.
+        /// Gets or sets a value indicating whether this entry is in use.
         /// </summary>
         public bool Busy { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FileEntry"/> class.
-        /// </summary>
-        /// <param name="entryId">The index of this entry</param>
-        public FileEntry(int entryId)
-        {
-            this.Id = entryId;
-        }
-
-        /// <summary>
         /// Gets a debug textual representation of this entry.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Debug string.</returns>
         public override string ToString()
         {
-            return $"[{(this.Busy? "InUse" : "Free")}] {this.Id} -> {this.NextPage}";
+            return $"[{(this.Busy ? "InUse" : "Free")}] {this.Id} -> {this.NextPage}";
         }
     }
 }

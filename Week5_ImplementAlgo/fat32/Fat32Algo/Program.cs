@@ -1,11 +1,21 @@
-﻿using System;
-using System.Text;
+﻿// <copyright file="Program.cs" company="Nate Bachmeier">
+// Copyright (c) Nate Bachmeier. All rights reserved.
+// </copyright>
 
 namespace Fat32Algo
 {
-    class Program
+    using System;
+    using System.Text;
+
+    /// <summary>
+    /// Represents a simple test utility for the algorithms.
+    /// </summary>
+    public class Program
     {
-        static void Main()
+        /// <summary>
+        /// The main entry point for console.
+        /// </summary>
+        public static void Main()
         {
             var fatTable = new FatTable(
                 maxBlocks: 1024,
@@ -23,7 +33,7 @@ namespace Fat32Algo
             Console.WriteLine("works.");
         }
 
-        static string RandomString(int length)
+        private static string RandomString(int length)
         {
             var sb = new StringBuilder(length);
             for (var ix = 0; ix < length; ix++)
