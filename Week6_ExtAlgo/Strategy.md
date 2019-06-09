@@ -43,9 +43,22 @@ The strategy might also needs to optimize for:
 - Highest probability of expiring worthless
 - Least slippage risk
 
-For all time frames, the strategy needs to started *before* the large move begins. This can happen by
+For all time frames, the strategy can be _preemptively started _before_ the large move begins.
 
 - Being long and short
 - Buying the cheaper side / selling the more expensive side
-- Waiting for the assumption to be accuarate
-- Triggering trades when certain metrics occur
+- Fire and Waiting for the assumption to be accuarate
+- Setup deferred trades to fire when certain metrics occur
+
+An alternative opinion is to _defer until after_ the large move begins.
+
+- Easier to implement
+- Less risk, less profit
+
+### Efficient Scaling
+
+There are two directions for scaling the net position, up or out.
+
+Using lots of small positions gives diversity at the risk that they are difficult to call back in hast. This is more concerning for shorter time frames which need more agility. For longer time periods of several quarters to years, the added diversity could lower the impact of an individual asset to the net position.
+
+Since the relationship exists between the diversity and timeframe, a complete algorithm needs to take this into account as well.
