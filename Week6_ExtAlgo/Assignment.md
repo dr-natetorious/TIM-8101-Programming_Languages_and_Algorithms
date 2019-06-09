@@ -4,7 +4,7 @@
 
 Select a current research problem that could be addressed by a new algorithm, refinement of an old algorithm, cooperation of two or more algorithms, or application of an algorithm in a new way.  When working with scholarly sources, you will often find research ideas in sections labeled “future work.”
 
-Write a problem statement paper, in which you address the items below. 
+Write a problem statement paper, in which you address the items below.
 
 What is the problem that should be addressed with additional research (i.e. what is going wrong?)?  Support the existence of the problem with at least three recent references.
 

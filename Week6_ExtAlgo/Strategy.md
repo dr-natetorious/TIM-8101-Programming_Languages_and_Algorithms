@@ -62,3 +62,9 @@ There are two directions for scaling the net position, up or out.
 Using lots of small positions gives diversity at the risk that they are difficult to call back in hast. This is more concerning for shorter time frames which need more agility. For longer time periods of several quarters to years, the added diversity could lower the impact of an individual asset to the net position.
 
 Since the relationship exists between the diversity and timeframe, a complete algorithm needs to take this into account as well.
+
+### Greedy Algorithm
+
+Greed is not good, and greedy algorithms might be an inefficient method to add trades.
+
+After a huge leap in a direction the market can often over extend itself, and lead to profit taking.
