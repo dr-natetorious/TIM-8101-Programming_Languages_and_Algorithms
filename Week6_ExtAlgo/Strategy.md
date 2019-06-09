@@ -48,3 +48,4 @@ For all time frames, the strategy needs to started *before* the large move begin
 - Being long and short
 - Buying the cheaper side / selling the more expensive side
 - Waiting for the assumption to be accuarate
+- Triggering trades when certain metrics occur
