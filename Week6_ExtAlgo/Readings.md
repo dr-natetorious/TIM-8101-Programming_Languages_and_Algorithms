@@ -12,7 +12,7 @@ Rudnick describes how random walks occur in many scenarios and "plays a central 
 
 He uses generating function as means to construct all possible combinatorals, then applies statistical modeling to cluster nearest neighbors and their associated probability of being a final destination. The forumalas suggest that if it is possible for all of these other domains, why not also financial systems?
 
-Rudnick, Joseph, and George Gaspari. Elements of the Random Walk : An introduction for Advanced Students and Researchers, Cambridge University Press, 2004. ProQuest Ebook Central, http://ebookcentral.proquest.com/lib/ncent-ebooks/detail.action?docID=256691.
+Rudnick, Joseph, and George Gaspari. [Elements of the Random Walk : An introduction for Advanced Students and Researchers, Cambridge University Press, 2004. ProQuest Ebook Central](http://ebookcentral.proquest.com/lib/ncent-ebooks/detail.action?docID=256691)
 Created from ncent-ebooks on 2019-06-09 12:43:36.
 
 ## Signal to Noise Ratios
