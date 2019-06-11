@@ -34,8 +34,8 @@ ENV GRAPHQL_PARSER_LIB=/usr/local/lib/
 ENV CFLAGS="${CFLAGS} -I ${GRAPHQL_PARSER_INC}"
 ENV LDFLAGS="${LDFLAGS} -L ${GRAPHQL_PARSER_LIB}"
 
-WORKDIR /git/graphql/libgraphqlparser/test
-RUN curl -L -o release-1.8.0.zip https://github.com/google/googletest/archive/release-1.8.0.zip \
-  && unzip release-1.8.0.zip \
-  && cmake . \
-  && make
+# WORKDIR /git/graphql/libgraphqlparser/test
+# RUN curl -L -o release-1.8.0.zip https://github.com/google/googletest/archive/release-1.8.0.zip \
+#   && unzip release-1.8.0.zip \
+#   && cmake . \
+#   && make

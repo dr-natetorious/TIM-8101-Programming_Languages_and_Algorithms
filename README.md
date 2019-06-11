@@ -6,14 +6,14 @@ Materials and Works for Programming Languages and Algorithms
 
 - Section 1: Programming Languages
   - [Week 1](Week1_LexicalAnalyzer): Procedural Programming and Language Construction
-  - Week 2: Object-Oriented and Functional Programming
-  - Week 3: Emerging Languages and Domain-Specific Languages
+  - [Week 2](Week2_AspectProgramming): Object-Oriented and Functional Programming
+  - [Week 3](Week3_DomainSpecificLanguages): Emerging Languages and Domain-Specific Languages
 - Section 2: Algorithms
-  - Week 4: Sorting, Searching, and Big-O
-  - Week 5: More Algorithms
-  - Week 6: Research Problems in Algorithms
+  - [Week 4](Week4_BigOh): Sorting, Searching, and Big-O
+  - [Week 5](Week5_ImplementAlgo): More Algorithms
+  - [Week 6](Week6_ExtAlgo): Research Problems in Algorithms
 - Section 3: Research and Application
-  - Week 7: Research Proposal
+  - [Week 7](Week7_Darpa_EncodingVuln): Research Proposal
   - Week 8: Experimentation
 
 ## Learning Objectives
