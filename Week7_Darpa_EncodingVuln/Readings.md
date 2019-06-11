@@ -29,3 +29,9 @@ These are commonly referenced tools for mutating strings in an effort to trigger
 Facebook [provides an official](https://github.com/graphql/libgraphqlparser) C++ parser for extracting the AST from a GraphQL query.
 
 A [local build environment](libgraphqlparser) is provided for building utilities against this library.
+
+## Fetching GraphQL Schema
+
+There is a graphql cli that can be used to fetch data from an endpoint.
+
+This [stackflow post](https://stackoverflow.com/questions/37397886/get-graphql-whole-schema-query) details the setup.
