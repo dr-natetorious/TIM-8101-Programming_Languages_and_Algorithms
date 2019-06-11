@@ -17,3 +17,15 @@ Apollo is the 'big name' in open source node implementations and commonly used b
 The official DSL specification is defined [on github](https://github.com/graphql/graphql-spec).
 
 It describes the language requirements and optional implementation features.
+
+## C++ Fuzzing Libraries
+
+This [blog post](http://jefftrull.github.io/c++/clang/llvm/fuzzing/sanitizer/2015/11/27/fuzzing-with-sanitizers.html) describes `libFuzzer` and `AFL`.
+
+These are commonly referenced tools for mutating strings in an effort to trigger vulnerabilities.
+
+## LibGraphQLParser
+
+Facebook [provides an official](https://github.com/graphql/libgraphqlparser) C++ parser for extracting the AST from a GraphQL query.
+
+A [local build environment](libgraphqlparser) is provided for building utilities against this library.
