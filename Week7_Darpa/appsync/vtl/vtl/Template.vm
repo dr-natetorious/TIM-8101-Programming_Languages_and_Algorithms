@@ -1,0 +1,11 @@
+Hello $name
+
+The Person is ${dude} object
+
+#set($taco = "burrito")
+
+i like $taco
+
+you are $dude.age
+
+$ctx 

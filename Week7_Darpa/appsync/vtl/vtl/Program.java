@@ -21,6 +21,7 @@ public class Program {
 		VelocityContext context = new VelocityContext();
 
 		context.put( "name", new String("Velocity") );
+		context.put("dude", new Person());
 
 		Template template = null;
 

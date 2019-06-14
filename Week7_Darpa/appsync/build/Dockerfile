@@ -7,5 +7,10 @@ RUN apt-get -y update \
   && apt-get -y install \
     default-jdk-headless \
     maven \
-    svn
+    subversion
 
+WORKDIR /svn
+RUN svn checkout http://svn.apache.org/repos/asf/velocity/engine/trunk velocity
+
+WORKDIR /svn/velocity
+RUN mvn
