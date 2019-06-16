@@ -24,7 +24,7 @@ They attribute the successes to planning, planning, and more planning.
 
 ## Max Flow and Graph Algorithms
 
-## Comparing_Tree_Similarity.pdf
+### Comparing_Tree_Similarity.pdf
 
 This article describes methods for evaluating the similarity of two different trees.
 
