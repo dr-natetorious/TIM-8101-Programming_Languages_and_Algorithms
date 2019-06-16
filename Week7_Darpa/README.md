@@ -6,27 +6,10 @@ The research topic is security research into GraphQL (GQL), a public facing data
 
 ## Table of Contents
 
-- [Readings](Readings.md) - Bibliography of independent readings for the week.
+- [Readings](Readings) - Bibliography of independent readings for the week.
 
 - [Assignment](Assignment.md) - Requirements of this weeks research material.
 
-- [Plan](Plan.md) - Note while planning the research topic / details that don't really fit anywhere else.
+- [GraphQL](graphql) - Individual research was performed on graphql and Amazon appsync
 
-## Thesis in 30 seconds
-
-GraphQL allows allows users to interact with numerous protected data stores and back end systems.
-
-A dynamic fuzzer can be constructed which attempts to maximize code coverage in an effort to exploit these systems.
-
-This can be accomplished through steps:
-
-1. Download the published schema
-2. Feed the schema into a constraint solver (eg. Z3 or Google OR)
-3. Manipulate the query
-    - dynamic portions: high probability of injection
-    - static portions: low probability of injection
-4. For each iteration
-    - compute an efficiency score (eg. code coverage)
-    - check through instrumentation for parse errors
-5. Using a separate optimizer, attempt to maximize the iteration score
-
+- [DARPA](darpa) - The Assignment requires writing a DARPA proposal, notes from investigating existing samples
