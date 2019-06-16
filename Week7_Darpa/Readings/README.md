@@ -72,9 +72,21 @@ Software defined networks (SDN) are a layer on top of physical networking which 
 
 ### Probabilistic_Reliability_and_Privacy_of_Communitication_Using_Multicast_in_GenNetworks.pdf
 
+This article discusses improving reliability through crypto and game theory.
+
+It presents a series of attack vectors within multicast scenarios and describes mitigations for multi-message sessions.
+
 ### Scalable_Eventually_Consistent_over_Lossy_Networks.pdf
 
+This article describes a mechanism for reliably building distributed sequential counters.
+
+Having the capability to sequentailly count exactly once sematics comes up in several scenarios.
+
+They accomplish this through a hand shake algorithm where replicas promote tuples of (source and dest) time stamped values.
+
 ### Survey_Distributed_Transaction_Data_Partitioning.pdf
+
+This survey provides a throughal list of methods used for distributed transactions.
 
 ## Eventing Patterns
 
