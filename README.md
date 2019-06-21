@@ -13,8 +13,8 @@ Materials and Works for Programming Languages and Algorithms
   - [Week 5](Week5_ImplementAlgo): More Algorithms
   - [Week 6](Week6_ExtAlgo): Research Problems in Algorithms
 - Section 3: Research and Application
-  - [Week 7](Week7_Darpa_EncodingVuln): Research Proposal
-  - Week 8: Experimentation
+  - [Week 7](Week7_Darpa): Research Proposal
+  - [Week 8](Week8_Experiment): Experimentation
 
 ## Learning Objectives
 
