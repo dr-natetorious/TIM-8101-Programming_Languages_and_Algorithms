@@ -59,6 +59,8 @@ The [Moq3.py](Moq3.py) script was executed against the default parameters.
 
 These were both executed in parallel to speed up collecting results.
 
+![moq3-faster.png](moq3-faster.png)
+
 ![moq3-fastest.png](moq3-fastest.png)
 
 ## Moq4
