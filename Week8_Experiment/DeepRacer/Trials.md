@@ -40,7 +40,7 @@ It uses the [Moq3.py](Moq3.py) script to give a combined score of `near_center *
 
 After an hour here are the results of [Moq3.py]:
 
-- Blue = Moq2 (follow center)
+- Blue = Moq2 (follow center)git add 
 - Orange = MoqFast (follow center + cranked up)
 - Green = Moq3 (follow center + correct_heading)
 
@@ -59,6 +59,12 @@ The [Moq3.py](Moq3.py) script was executed against the default parameters.
 
 These were both executed in parallel to speed up collecting results.
 
+![moq3-fastest.png](moq3-fastest.png)
+
 ## Moq4
 
-The [Moq4.py](Moq4.py) script extends Moq3 with penalty for the car `speed<=0.5`
+The [Moq4.py](Moq4.py) script extends Moq3 with penalty for the car `speed<=0.5` and `max speed=2.0`
+
+There is some effort required for more stability but it did complete one iteration in `0:38.3` seconds.
+
+![moq4.png](moq4.png)
