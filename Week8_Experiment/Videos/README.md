@@ -17,8 +17,16 @@ Perhaps a rewards function should be created to encourage that behavior, then th
 
 ## MIT 6.S091: Introduction to Deep Reinforcement Learning (Deep RL)
 
-In this recorded lecture the professor provides an extensive explaination of reinforcement learning.
+In this recorded lecture Fridman, Lex provides an extensive explaination of reinforcement learning.
 
 There is significant attention to pit-falls and best practices.
 
 https://www.youtube.com/watch?v=zR11FLZ-O9M
+
+![taxonomy.png](taxonomy.png)
+
+## MIT 6.S094: Introduction to Deep Learning and Self-Driving Cars
+
+Need to watch this one.
+
+https://youtu.be/1L0TKZQcUtA
