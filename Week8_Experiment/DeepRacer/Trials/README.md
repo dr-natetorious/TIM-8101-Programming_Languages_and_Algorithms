@@ -105,3 +105,19 @@ The Moq6 has been started with a `2 hour training cycle` and an crude `is_drivin
 The angles were reduced and the speed granularity increased for faster/tighter cornering. This was based on the video advice of Velociraptor
 
 ![moq6-config.png](mop6-config.png)
+
+## Moq7
+
+This is a clone of Moq3-fastest which is still the winning configuration, but using Moq6 rewards.
+
+There is a key difference that each reward category is `sum()` instead of `multiply()` -- this way getting correct answers in a couple categories helps.
+
+Best time = `0:31.6`
+
+![moq7.png](moq7.png)
+
+## Moq8
+
+This is a clone of Moq7 but the car is given 3 gears with 4.0mps as the upper limit.
+
+A 2 hour training has been kicked off and will be checked on this afternoon.
