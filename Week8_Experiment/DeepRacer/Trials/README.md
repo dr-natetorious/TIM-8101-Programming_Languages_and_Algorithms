@@ -121,3 +121,7 @@ Best time = `0:31.6`
 This is a clone of Moq7 but the car is given 3 gears with 4.0mps as the upper limit.
 
 A 2 hour training has been kicked off and will be checked on this afternoon.
+
+New record `24.7 seconds` which is enhanced by the higher acceleration in straight aways.
+
+![moq8.png](moq8.png)
