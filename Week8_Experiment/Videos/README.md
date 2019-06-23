@@ -27,6 +27,10 @@ https://www.youtube.com/watch?v=zR11FLZ-O9M
 
 ## MIT 6.S094: Introduction to Deep Learning and Self-Driving Cars
 
-Need to watch this one.
+Proposes the question is driving more like chess or communication?
+
+Like chess would mean that it is solvable by formalized math rules; versus communication needs semantic reasoning about the evolving context.
+
+There is all significant explaination on neural networks and how various scenarios are approached.
 
 https://youtu.be/1L0TKZQcUtA

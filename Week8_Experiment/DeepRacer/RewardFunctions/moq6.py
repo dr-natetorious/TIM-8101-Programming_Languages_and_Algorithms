@@ -1,9 +1,7 @@
 import math
-import numpy as np
-import pandas as pd
 
-MAX_SPEED=8.0
-PENALIZE_ACTION = 1e-3
+MAX_SPEED=4.0
+APRX_ZERO = 1e-3
 MAX_STEERING_ANGLE=30
 AT_WAYPOINT_REWARD= 2
 
@@ -24,7 +22,7 @@ def is_near_center(track_width, distance_from_center):
     elif distance_from_center <= marker_3:
         reward = 0.1
     else:
-        reward = PENALIZE_ACTION  # likely crashed/ close to off track
+        reward = APRX_ZERO  # likely crashed/ close to off track
 
     return reward
 
@@ -44,51 +42,24 @@ def has_correct_heading(prev_point, next_point, heading):
 
 	return 1
 
-def get_track_curvature(waypoints):
-    a = np.array(waypoints)
-    dx_dt = np.gradient(a[:, 0])
-    dy_dt = np.gradient(a[:, 1])
-    velocity = np.array([ [dx_dt[i], dy_dt[i]] for i in range(dx_dt.size)])
-    ds_dt = np.sqrt(dx_dt * dx_dt + dy_dt * dy_dt)
-    tangent = np.array([1/ds_dt] * 2).transpose() * velocity
+def next_curve(waypoints, closest_waypoints):
+    (x1, y1) = waypoints[closest_waypoints[0]]
+    (x2, y2) = waypoints[closest_waypoints[1]]
 
-    tangent_x = tangent[:, 0]
-    tangent_y = tangent[:, 1]
+    delta_y = y2-y1
+    delta_x = max(x2-x1, APRX_ZERO)
+    slope = delta_y/delta_x 
+    return slope
 
-    deriv_tangent_x = np.gradient(tangent_x)
-    deriv_tangent_y = np.gradient(tangent_y)
-
-    dT_dt = np.array([ [deriv_tangent_x[i], deriv_tangent_y[i]] for i in range(deriv_tangent_x.size)])
-
-    length_dT_dt = np.sqrt(deriv_tangent_x * deriv_tangent_x + deriv_tangent_y * deriv_tangent_y)
-
-    normal = np.array([1/length_dT_dt] * 2).transpose() * dT_dt
-    d2s_dt2 = np.gradient(ds_dt)
-    d2x_dt2 = np.gradient(dx_dt)
-    d2y_dt2 = np.gradient(dy_dt)
-
-    curvature = np.abs(d2x_dt2 * dy_dt - dx_dt * d2y_dt2) / (dx_dt * dx_dt + dy_dt * dy_dt)**1.5
-    t_component = np.array([d2s_dt2] * 2).transpose()
-    n_component = np.array([curvature * ds_dt * ds_dt] * 2).transpose()
-
-    acceleration = t_component * tangent + n_component * normal
-    return (curvature, acceleration, velocity)
-
-def get_desired_speed(waypoints, closest_waypoints):
-    (track_curvature, acceleration, velocity) = get_track_curvature()
-
-    prev_curve = track_curvature[closest_waypoints[0]]
-    next_curve = track_curvature[closest_waypoints[1]]
-
-    vel = pd.DataFrame(np.array(velocity), columns=['x','y'])
-    vel['vel_x'] = vel['x']
-    vel['vel_y'] = vel['y']
-    vel['v'] = np.sqrt( vel['vel_x']**2 + vel['vel_y']**2)
-
-    return vel['v'][closest_waypoints[1]] * MAX_SPEED 
-
-def is_going_fast_enough(desired_speed, actual_speed):
-    return (desired_speed-actual_speed)/desired_speed
+def is_going_fast_enough(slope, speed):
+    slope = abs(slope)
+    
+    if slope < 0.5:
+        return (MAX_SPEED-speed)/MAX_SPEED
+    elif slope < 1:
+        return ((MAX_SPEED/2)-speed)/MAX_SPEED
+    else:
+        return ((MAX_SPEED/3)-speed)/MAX_SPEED
 
 def reward_function(params):
     '''
@@ -126,9 +97,9 @@ def reward_function(params):
         next_point=waypoints[closest_waypoints[1]],
         heading = heading)
 
-    # 4. Are we going desirable speed
-    desired_speed = get_desired_speed(waypoints, closest_waypoints)
-    reward *= is_going_fast_enough(desired_speed=desired_speed, actual_speed=speed)
+    # 4. Are we going a desirable speed
+    slope = next_curve(waypoints, closest_waypoints)
+    reward *= is_going_fast_enough(slope, speed)
 
     # Return the net score
     return float(reward)

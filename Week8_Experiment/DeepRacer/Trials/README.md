@@ -77,7 +77,31 @@ The likely reason for the reduced stability is that there are corners that requi
 
 Since Moq3-fastest had the best time and moq3-faster was glitchy that would suggest that `1 hour` might be too short to train.
 
-Moq4 was also flakey so we should go in a different direction. Perhaps desired speed should be a function of how straight the next N way_points are.
+Moq4 was also flakey so as the minumum speed prevented it from navigating corners. This was naive solution that appears too naive to work.
 
-Also what a graph was constructed using the `way_points` and a high value given for driving over the critical junctions.
+### Shortest Curved Path
 
+The [ShortestCurvePath](../EfficientPath/ShortestCurvedPath.py) was calculated along with acceleration and velocity vectors.
+
+However it does not appear that `import numpy` is a valid statement according to unit test validation. To mitigate this two solutions are proposed:
+
+- Export the waypoints (eg. to http endpoint) and then calculate the matrix out of band
+- Calculate the slope using basic geometry as approximation
+
+```json
+lambda_function.DeepRacerError:
+{
+    "type": "IMPORT_ERROR",
+    "message": "No module named 'numpy'",
+    "line": "import numpy as np",
+    "lineNumber": 2
+}
+```
+
+## Moq6
+
+The Moq6 has been started with a `2 hour training cycle` and an crude `is_driving_fast_enough` filter based on the slope.
+
+The angles were reduced and the speed granularity increased for faster/tighter cornering. This was based on the video advice of Velociraptor
+
+![moq6-config.png](mop6-config.png)
