@@ -34,3 +34,5 @@ Like chess would mean that it is solvable by formalized math rules; versus commu
 There is all significant explaination on neural networks and how various scenarios are approached.
 
 https://youtu.be/1L0TKZQcUtA
+
+![purpose-of-layering.png](purpose-of-layering.png)
