@@ -10,7 +10,7 @@ This reduces the ability to customize the syntax but reduces the effort to imple
 
 An example might include creating various SQL functions and stored procedures that encapsulate a domain. This improves the readability and enhances the developer experience.
 
-Consider this example which is self-documenting and is instantly the intent.
+Consider this example which is self-documenting and the intent is instantly clear.
 
 ```sql
 SELECT students.*
