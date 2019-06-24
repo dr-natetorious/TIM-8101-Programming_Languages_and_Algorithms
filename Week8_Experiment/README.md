@@ -7,7 +7,7 @@ In the final week of the course, you will critique and recreate a published expe
 ## Table of Contents
 
 - [Assignment](Assignment.md) - Requirements for this week's deliverable.
-- [Week8_Automated Driving Paper](Week8_AutoDriver.docx) - Article describing learnings for the week.
+- [Autonomous Driving Paper](Week8_AutoDriver.docx) - Essay for the the week.
 - [Deep Racer Files](DeepRacer) - Notes, scripts, and related for Amazon Deep Racer.
 - [Articles](Readings) - Journals read for the week
 - [Videos Resources](Videos) - Videos uses to understand the content.
