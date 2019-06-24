@@ -2,9 +2,15 @@
 
 Amazon Deep Racer is a managed automous driving simulator that simplifies testing racing algorithms.
 
+## Table of Contents
+
+- [Reward Functions](RewardFunctions) - Reward Functions used by the various trials.
+- [Trials and Results](Trials) - Notes and results from evaluting the reward functions.
+- [Minimum Curved Path](EfficientPath) - A physics based approach to approximate the `race line`.
+
 ## What parameters are available to the vehicle
 
-```json
+```text
 {
     "all_wheels_on_track": Boolean,    # flag to indicate if the vehicle is on the track
     "x": float,                        # vehicle's x-coordinate in meters

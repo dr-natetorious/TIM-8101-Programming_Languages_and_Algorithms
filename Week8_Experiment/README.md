@@ -1,6 +1,8 @@
 # Section 3: Week 8: Reproduce an Experiment
 
-Experimentation is a vital part of research, especially when outcomes are unknown, hypotheses require testing, and claims require validation. In the final week of the course, you will critique and recreate a published experiment in an effort to gain a greater understanding of the methods utilized therein.
+Experimentation is a vital part of research, especially when outcomes are unknown, hypotheses require testing, and claims require validation. 
+
+In the final week of the course, you will critique and recreate a published experiment in an effort to gain a greater understanding of the methods utilized therein.
 
 ## Table of Contents
 

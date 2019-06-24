@@ -104,7 +104,7 @@ The Moq6 has been started with a `2 hour training cycle` and an crude `is_drivin
 
 The angles were reduced and the speed granularity increased for faster/tighter cornering. This was based on the video advice of Velociraptor
 
-![moq6-config.png](mop6-config.png)
+![moq6-config.png](moq6-config.png)
 
 ## Moq7
 
@@ -122,6 +122,6 @@ This is a clone of Moq7 but the car is given 3 gears with 4.0mps as the upper li
 
 A 2 hour training has been kicked off and will be checked on this afternoon.
 
-New record `24.7 seconds` which is enhanced by the higher acceleration in straight aways.
+New record `23.8 seconds` which is enhanced by the higher acceleration in straight aways.
 
 ![moq8.png](moq8.png)

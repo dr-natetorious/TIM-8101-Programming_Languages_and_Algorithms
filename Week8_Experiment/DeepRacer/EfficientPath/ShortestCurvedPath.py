@@ -31,7 +31,7 @@ def get_track_curvature(waypoints):
   n_component = np.array([curvature * ds_dt * ds_dt] * 2).transpose()
 
   acceleration = t_component * tangent + n_component * normal
-  return (curvature, acceleration)
+  return (curvature, acceleration, velocity)
 
 waypoints = [
   [2.5, 0.75],
@@ -70,5 +70,5 @@ waypoints = [
   [1.83, 1.125],
   [2.17, 0.885]]
 
-(curvature, acceleration) = get_track_curvature(waypoints)
+(curvature, acceleration, velocity) = get_track_curvature(waypoints)
 print(curvature)
