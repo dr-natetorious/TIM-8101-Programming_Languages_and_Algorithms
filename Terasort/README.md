@@ -134,7 +134,7 @@ Killed by external signal
 
 ## Accessing EMR Web Portal
 
-```
+```text
 Download PuTTY.exe to your computer from:
 http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
 Start PuTTY.
