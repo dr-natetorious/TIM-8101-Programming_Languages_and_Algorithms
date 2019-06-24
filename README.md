@@ -5,16 +5,16 @@ Materials and Works for Programming Languages and Algorithms
 ## Sections
 
 - Section 1: Programming Languages
-  - [Week 1](Week1_LexicalAnalyzer): Procedural Programming and Language Construction
-  - [Week 2](Week2_AspectProgramming): Object-Oriented and Functional Programming
-  - [Week 3](Week3_DomainSpecificLanguages): Emerging Languages and Domain-Specific Languages
+  - [Week 1](Week1_LexicalAnalyzer): Implement a custom language
+  - [Week 2](Week2_AspectProgramming): Explore Aspect Oriented Design
+  - [Week 3](Week3_DomainSpecificLanguages): Explore Language Oriented Design
 - Section 2: Algorithms
-  - [Week 4](Week4_BigOh): Sorting, Searching, and Big-O
-  - [Week 5](Week5_ImplementAlgo): More Algorithms
-  - [Week 6](Week6_ExtAlgo): Research Problems in Algorithms
+  - [Week 4](Week4_BigOh): Evaluating and Critizing Big Oh
+  - [Week 5](Week5_ImplementAlgo): Implement and Evaluate FAT32+Compression Algorithm
+  - [Week 6](Week6_ExtAlgo): Using state-of-the-art sciences in Financial Technologies
 - Section 3: Research and Application
-  - [Week 7](Week7_Darpa): Research Proposal
-  - [Week 8](Week8_Experiment): Experimentation
+  - [Week 7](Week7_Darpa): Research Proposal: Reliable Cloud Data Ingestion
+  - [Week 8](Week8_Experiment): Experimentation: Autonomous Driving Algorithms
 
 ## Learning Objectives
 
