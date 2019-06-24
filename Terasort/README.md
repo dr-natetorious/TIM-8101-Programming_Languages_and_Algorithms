@@ -134,6 +134,7 @@ Killed by external signal
 
 ## Accessing EMR Web Portal
 
+```
 Download PuTTY.exe to your computer from:
 http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html
 Start PuTTY.
@@ -147,3 +148,4 @@ Select the Dynamic and Auto options.
 Leave the Destination field empty and click Add.
 Click Open.
 Click Yes to dismiss the security alert.
+```
