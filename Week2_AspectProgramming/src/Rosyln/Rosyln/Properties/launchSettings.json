@@ -1,8 +1,8 @@
 {
   "profiles": {
     "Rosyln": {
-      "commandName": "Project",
-      "commandLineArgs": "S:\\git\\mirtmastery\\branches\\service-MasteryMaker\\Service\\MasteryMakerService.Core\\"
+        "commandName": "Project",
+        "commandLineArgs": "S:\\git\\RenaissancePlace\\service-OrgManagementService"
     }
   }
 }

@@ -45,12 +45,12 @@ namespace Rosyln
                     }
                 }
 
-                if (found == false)
-                {
-                    node.AddArgumentListArguments(
-                        kines: SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression,
-                        SyntaxFactory.ParseExpression("System.StringComparer.OrdinalIgnoreCase"));
-                }
+                //if (found == false)
+                //{
+                //    node.AddArgumentListArguments(
+                //        kines: SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression,
+                //        SyntaxFactory.ParseExpression("System.StringComparer.OrdinalIgnoreCase"));
+                //}
             }
 
             return node;
